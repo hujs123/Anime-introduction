@@ -3,6 +3,7 @@
     <div>{{ message }}</div>
     <button @click="toHomeImages">前往图片界面</button>
     <button @click="toMaintenance">前往指标界面</button>
+    <button @click="totest2">前往测试界面</button>
   </div>
 </template>
 
@@ -19,5 +20,8 @@ const toHomeImages = () => {
 
 const toMaintenance = () => {
   router.push('/data-source-maintenance') // 使用router实例的push方法进行导航
+}
+const totest2 = () => {
+  router.push('/test-vue') // 使用router实例的push方法进行导航
 }
 </script>

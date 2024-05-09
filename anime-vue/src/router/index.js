@@ -19,6 +19,12 @@ const routes = [
         // 假设您有一个HomeImages组件，这里需要正确导入并使用
         component: () => import('../views/home/dataSourceMaintenance.vue') // 示例中的动态导入
     },
+    {
+        path: '/test-page',
+        name: 'testPage',
+        // 假设您有一个HomeImages组件，这里需要正确导入并使用
+        component: () => import('../views/test/test_page.vue') // 示例中的动态导入
+    },
     // 其他路由...
     // 可以考虑添加一个404页面作为通配符路由
     {

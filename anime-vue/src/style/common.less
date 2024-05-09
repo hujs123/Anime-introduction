@@ -1,0 +1,96 @@
+.self-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /*margin: 30px auto;*/
+
+  .div {
+    /*font-weight: 600;*/
+    font-size: 14px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 30px;
+    width: 70px;
+    height: 30px;
+    border-radius: 2px;
+    margin: 0 15px;
+  }
+
+  .self-btn-default {
+    color: #666666;
+    background: #FFFFFF;
+    border: 1px solid #AAAAAA;
+  }
+
+  .self-btn-default-small {
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 60px;
+    width: 200px;
+    height: 60px;
+    border-radius: 4px;
+    margin: 0 15px;
+    color: #666666;
+    background: #FFFFFF;
+    border: 1px solid #AAAAAA;
+  }
+
+  .self-btn-primary {
+    height: 28px;
+    font-size: 14px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 28px;
+    border-radius: 1px;
+    margin: 0 15px;
+
+    color: #FFFFFF;
+    background: #1b65b9;
+    border: 1px solid #1b65b9;
+  }
+
+  .self-btn-primary-small {
+    font-weight: 600;
+    font-size: 28px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    text-align: center;
+    line-height: 60px;
+    width: 200px;
+    height: 60px;
+    border-radius: 4px;
+    margin: 0 15px;
+    background: #4966F5;
+    border: 1px solid #4966F5;
+  }
+
+  .self-btn-primary2 {
+    color: #4966F5;
+    background: #e6e6e6;
+    border: 1px solid #4966F5;
+  }
+
+  .self-btn-success {
+    color: #FFFFFF;
+    background: #31B9C0;
+    border: 1px solid #31B9C0;
+  }
+
+}
+
+// 或者，如果你使用的是 scoped CSS 或 Vue 3 的 <style scoped>
+// 你可能需要使用 ::v-deep 来穿透作用域
+// 注意：::v-deep 是 Vue 3 中用于深度选择器的语法
+.self-ant-table {
+  ::v-deep .ant-table-thead > tr > th {
+    height: 60px;
+    line-height: 60px;
+    // 其他样式...
+  }
+}
