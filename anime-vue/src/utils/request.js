@@ -23,10 +23,9 @@ export async function request(url, params, method) {
     } else {
         console.log('不加密', url, params)
         if (method == 'GET') {
-            await axios.get(url, params)
+            return await axios.get(url, params)
         } else if (method == 'POST') {
-            await axios.post(url, params)
+            return await axios.post(url, params)
         }
-
     }
 }

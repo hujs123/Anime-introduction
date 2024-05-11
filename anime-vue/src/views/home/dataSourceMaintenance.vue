@@ -70,12 +70,21 @@
               <div>
                 <button class="self-btn-primary" style="margin: 0px 20px 0px 0px">取消</button>
               </div>
-
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="test-style" >
+      <span>
+        你好
+      </span>
+      <a>呀</a>
+      <table>
+
+      </table>
+    </div>
+
   </div>
 </template>
 
