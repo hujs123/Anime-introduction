@@ -11,14 +11,21 @@
 <script setup>
 import { onMounted} from 'vue'
 import { useRouter } from 'vue-router'
+import {useStore} from 'vuex'
 
 const router = useRouter() // 使用useRouter hook代替直接导入router实例
+const store=useStore()  //
 
 onMounted(()=>{
   init()
 })
 
 const init=()=>{
+  console.log('store.state.count',store.state.count)
+  store.commit('setters',10)
+  console.log('store.state.count',store.state.count)
+  // console.log(store.commit()mutations.setter())
+  console.log(store.getters.doubleCount)
   console.log(router.options.routes)
 }
 /**

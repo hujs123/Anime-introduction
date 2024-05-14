@@ -5,13 +5,14 @@ import { setupRouteGuards } from './router/routeGuards'; // 引入路由守卫�
 import Antd from 'ant-design-vue';
 import vuetable from 'vxe-table'
 import './style/common.less';
+import store from './store/modules/common'
 
 // 创建 Vue Router 实例后，调用 setupRouteGuards 函数
 setupRouteGuards(router);
-
 // 读取env文件title给网页title
 document.title=process.env.VUE_APP_TITLE
 const app = createApp(App)
+app.use(store)
 app.use(router)
 app.use(Antd)
 .use(vuetable)

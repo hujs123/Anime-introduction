@@ -22,7 +22,6 @@ export function setupRouteGuards(router) {
       console.log(to.path)
       // 如果用户未登录且尝试访问非登录页面，重定向到登录页面
       console.log('未登录')
-      // next('/login-page');
       next();
       // next({ name: 'loginPage' }) // 重定向到登录页面
     } else {
