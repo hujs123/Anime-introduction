@@ -1,4 +1,4 @@
-// store.js
+// vuex状态管理
 import { createStore } from 'vuex';
 
 // 定义 state

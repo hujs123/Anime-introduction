@@ -21,11 +21,18 @@ export const testPageRoutes = [
         component: () => import('@/views/test/apiTestPage.vue') // 示例中的动态导入
     },
     {
-        path: '/test-store',
-        name: 'testStroe',
-        meta: {title: '测试store'},
+        path: '/pinia-test-store',
+        name: 'piniaTestStroe',
+        meta: {title: '测试piniastore'},
         // 假设您有一个HomeImages组件，这里需要正确导入并使用
-        component: () => import('@/views/test/storeTestPage.vue') // 示例中的动态导入
+        component: () => import('@/views/test/piniaStoreTestPage.vue') // 示例中的动态导入
+    },
+    {
+        path: '/vuex-test-store',
+        name: 'vuexTestStroe',
+        meta: {title: '测试vuexstore'},
+        // 假设您有一个HomeImages组件，这里需要正确导入并使用
+        component: () => import('@/views/test/vuexStoreTestPage.vue') // 示例中的动态导入
     }
 ]
 

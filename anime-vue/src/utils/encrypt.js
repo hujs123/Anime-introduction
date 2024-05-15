@@ -24,3 +24,13 @@ export function decryptByAes(encryptedText,secretKey,iv) {
   });
   return bytes.toString(CryptoJS.enc.Utf8);
 }
+//加密
+export function encryptData(data, secretKey) {
+  const cipher = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey);
+  return cipher.toString();
+}
+//解密
+export function decryptData(ciphertext, secretKey) {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
+  return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+}

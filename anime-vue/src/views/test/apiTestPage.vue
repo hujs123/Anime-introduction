@@ -4,6 +4,7 @@
       <button @click="queryData1">默认查询</button>
       <button @click="queryData2">未加密网关查询</button>
       <button @click="queryData3">处理网关查询</button>
+      <button @click="queryData4">加密处理</button>
       <button @click="toHomePage">返回首页</button>
     </div>
   </div>
@@ -14,10 +15,11 @@ import {useRouter} from 'vue-router'
 import axios1 from "axios";
 import axios2 from "@/utils/axiosService";
 import {request} from "@/utils/request";
+import { encryptData } from '../../utils/encrypt'
 
 const router = useRouter()
 const tableData = ref([])
-
+const secretKey=ref('1')
 
 //默认axios访问
 const queryData1 = async () => {
@@ -50,6 +52,20 @@ const queryData3 = async () => {
   try {
     console.log('queryData3')
     await request('/hujs/datasource/search', '', 'GET').then(res => {
+      let response = res.data
+      tableData.value = response.data
+      console.log('response', response)
+    })
+  } catch (err) {
+    console.warn(err.message)
+  }
+}
+const queryData4 = async () => {
+  try {
+    console.log('queryData4')
+    await request('/api/users/getUsers', {
+      encryptedData: encryptData({ message: 'Hello, World!' }, secretKey)
+    }, 'GET').then(res => {
       let response = res.data
       tableData.value = response.data
       console.log('response', response)

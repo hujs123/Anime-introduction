@@ -12,6 +12,8 @@
 import { onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 import {useStore} from 'vuex'
+import {useUserStore} from '../../store/index'
+const userStore = useUserStore()
 
 const router = useRouter() // 使用useRouter hook代替直接导入router实例
 const store=useStore()  //
@@ -33,6 +35,7 @@ const init=()=>{
  * @param val
  */
 const goPage = (val) => {
+  console.log('userStore',userStore.getStateName)
   console.log('跳转界面',val)
   router.push({name: val})
 }

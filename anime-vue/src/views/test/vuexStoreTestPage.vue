@@ -4,7 +4,7 @@
     <div>
       <button @click="setStoreStateCount()">store赋值</button>
       <button @click="doubleStoreStateCount()">异步处理赋值二倍</button>
-      <button @click="queryData3">处理网关查询</button>
+      <button @click="decrementIfOdd">actions-decrementIfOdd方法</button>
       <button @click="toHomePage">返回首页</button>
     </div>
   </div>
@@ -29,8 +29,8 @@ const doubleStoreStateCount = async () => {
   let p=store.getters.getState(2)
   console.log(p)
 }
-//axios封装访问
-const queryData3 = async () => {
+//actions，decrementIfOdd方法
+const decrementIfOdd = async () => {
   store.dispatch('decrementIfOdd').then(() => {
     console.log('store.state.count after decrementIfOdd', store.state.count)
   });
