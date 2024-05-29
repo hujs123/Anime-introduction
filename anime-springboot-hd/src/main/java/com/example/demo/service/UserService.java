@@ -2,12 +2,14 @@ package com.example.demo.service;
 
 import com.example.demo.entity.UserEntity;
 import com.example.demo.service.impl.UserRepository;
+
 import com.example.demo.utils.EncryptionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +17,21 @@ import java.util.Map;
 @Service
 public class UserService  {
 
-    private static final String SECRET_KEY = "your-secret-key"; // 请确保这与前端使用的密钥匹配
     @Autowired
     private UserRepository userRepository;
 
-    public UserEntity getUsers(Map<String, String>  requestBody){
+    @Autowired
+    private EncryptionUtils encryptionUtils;
+
+    public UserEntity getUsers(Map<String, String>  requestBody) throws Exception {
         String encryptedData = requestBody.get("encryptedData");
         log.info("requestBody:"+requestBody);
-        String decryptedData = EncryptionUtils.decryptData(encryptedData, SECRET_KEY);
+        log.info("encryptedData:"+encryptedData);
+        SecureRandom random = new SecureRandom();
+        byte[] iv = new byte[16];
+        random.nextBytes(iv);
+        log.info("iv:",iv);
+        String decryptedData = encryptionUtils.decryptdata(encryptedData,"qazwsxedcrfv");
         log.info("decryptedData:"+decryptedData);
         UserEntity userEntity=userRepository.findByName(decryptedData);
         log.info("userEntity:"+userEntity);

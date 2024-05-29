@@ -25,7 +25,8 @@ public class UserController {
     //
 
     @PostMapping("getUsers")
-    public UserEntity getUsers(@RequestBody Map<String, String> requestBody) {
+    public UserEntity getUsers(@RequestBody Map<String, String> requestBody) throws Exception {
+        log.info("进入方法");
         return userService.getUsers(requestBody);
     }
 

@@ -11,5 +11,4 @@
         and yygh.Redbillflag = '1'
     </select>
 
-
 </mapper>

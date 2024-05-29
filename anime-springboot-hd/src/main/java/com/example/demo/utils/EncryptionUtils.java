@@ -1,56 +1,60 @@
 package com.example.demo.utils;
 
+
+import org.springframework.stereotype.Component;
+
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+@Component
 public class EncryptionUtils {
 
     // 共享的密钥，应从配置、环境变量或密钥管理服务中获取
-    private static final String SECRET_KEY = "yourSecretKey"; // 仅为示例，不要硬编码
+    private static final String SECRET_KEY = "c6410b3e36ad900f03e10412a14cc93b"; // 仅为示例，不要硬编码
+    private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
+    // 假设你已经有了安全的密钥和IV生成方式
+    // 这里仅为示例，密钥和IV应该是随机生成的
+    private static final byte[] IV = "qazwsxed".getBytes(StandardCharsets.UTF_8); // IV必须是16字节
+
 
     // 加密方法
-    public static String encrypt(String data) throws Exception {
-        SecretKeySpec key = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
-        // 在实际应用中，应生成一个随机的IV
-        IvParameterSpec iv = new IvParameterSpec(SECRET_KEY.substring(0, 16).getBytes(StandardCharsets.UTF_8));
+    public String selfencrypt(String data) throws Exception {
 
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
-
-        byte[] encrypted = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(encrypted);
+        return data;
     }
-
 
     // 解密方法
-    public static String decrypt(String encryptedData) throws Exception {
-        SecretKeySpec key = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
-        IvParameterSpec iv = new IvParameterSpec(SECRET_KEY.substring(0, 16).getBytes(StandardCharsets.UTF_8));
+    public String selfdecrypt(String encryptedData) throws Exception {
 
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        return encryptedData;
+    }
+
+    public String encryptdata(String encryptedData, String secretKey) {
+
+        return encryptedData;
+    }
+
+    public String decryptdata(String encryptedData, String secretKey) throws InvalidAlgorithmParameterException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, NoSuchAlgorithmException {
+        byte[] ciphertext = Base64.getDecoder().decode(encryptedData);
+
+        SecretKeySpec key = new SecretKeySpec(secretKey.getBytes(), "AES");
+        IvParameterSpec iv = new IvParameterSpec(IV);
+
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, key, iv);
 
-        byte[] decodedValue = Base64.getDecoder().decode(encryptedData);
-        byte[] decryptedValue = cipher.doFinal(decodedValue);
-
-        return new String(decryptedValue, StandardCharsets.UTF_8);
+        byte[] decrypted = cipher.doFinal(ciphertext);
+        return new String(decrypted, StandardCharsets.UTF_8);
     }
-
-    public static String decryptData(String encryptedData, String secretKey) {
-        try {
-            SecretKeySpec skeySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "AES");
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec);
-            byte[] original = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
-
-            return new String(original);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
-    }
+    // 注意：上述代码中的密钥和IV是硬编码的，仅用于示例。
+    // 在实际应用中，你应该使用安全的方式生成和存储这些值。
 }

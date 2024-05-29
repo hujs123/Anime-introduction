@@ -34,11 +34,11 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 <!--        日志输出依赖-->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.12</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>ch.qos.logback</groupId>-->
+<!--            <artifactId>logback-classic</artifactId>-->
+<!--            <version>1.2.12</version>-->
+<!--        </dependency>-->
 
 <!--        连接数据库-->
         <dependency>
@@ -55,6 +55,19 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!--前端密码解密-->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.62</version>
+        </dependency>
+        <!--    mybatis     -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <!--            <version>3.3.1</version>-->
+            <version>3.4.1</version>
+        </dependency>
     </dependencies>
 
     <build>
