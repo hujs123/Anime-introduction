@@ -12,7 +12,7 @@
     </div>
 
     <div>
-      <button @click="test(param1,param2,param3,param4)">利息计算</button>
+      <button @click="test">测试</button>
       <button @click="init">初始化</button>
       <button @click="posttest">发送POST请求</button>
       <button @click="test">测试非加密网关</button>
@@ -61,33 +61,14 @@ const posttest = async () => {
 const toHomePage = async () => {
   router.push('/') // 使用router实例的push方法进行导航
 }
-/**
- *
- * @param param1  本金
- * @param param2  利率
- * @param param3  存款年份
- * @param param4  总年份
- * @returns {Promise<void>}
- */
-const test = (param1, param2, param3, param4) => {
-  console.log(param1,' ',param2,' ',param3,' ',param4,' ')
-  // 假设param2是百分比，需要除以100
-  const rate = param2 / 100;
-  let sum = 0; // 初始总金额为0
 
-  for (let i = 0; i < param4; i++) {
-    // 在每年年初存款param1
-    sum += param1;
-    // 如果不是第一年，计算上一年的复利
-    if (i > 0) {
-      sum += sum * rate; // 这里只计算上一年的复利
-    }
-  }
-  console.log('总收益（包括本金）：', sum); // 输出总收益（包括本金）
+const test = () => {
+  let arr = [];
+  console.log(arr instanceof Date); // true
+
+  let date = new Date();
+  console.log(date instanceof Date); // true
 };
-
-// 示例调用
-// test(1000, 5, 1, 5); // 每年存款1000元，年利率5%，每年存一次，持续5年
 
 
 
