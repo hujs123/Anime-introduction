@@ -21,7 +21,7 @@ public class StaffRspDto {
     /**
      * 年龄
      */
-    private String age;
+    private Integer age;
 
     /**
      * 种族

@@ -4,14 +4,16 @@ import com.example.demo.dto.StaffReqDto;
 import com.example.demo.dto.StaffRspDto;
 import com.example.demo.entity.StaffEntity;
 import com.example.demo.service.StaffService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Slf4j
 @RestController
+@Tag(name = "干员接口", description = "干员相关信息查询接口的说明")
 @RequestMapping("/api/staff")
 public class StaffController {
 
@@ -19,12 +21,14 @@ public class StaffController {
     private StaffService staffService;
 
 
+    @Operation(summary = "hello罗德岛测试", description = "hello罗德岛测试的API")
     @GetMapping("/hello")
     public String hello() {
         log.info("【调用接口】:api/users/hello");
         return "api/users/hello调用成功";
     }
 
+    @Operation(summary = "查询干员", description = "查询干员的API")
     @PostMapping("getStaff")
     public List<StaffRspDto> getStaffs(@RequestBody StaffReqDto staffReqDto) {
         log.info("【请求地址】:api/users/getStaffs");
@@ -32,11 +36,13 @@ public class StaffController {
         return staffService.getStaff(staffReqDto);
     }
 
+    @Operation(summary = "查询干员", description = "查询所有干员的API")
     @PostMapping("getAllStaffs")
     public List<StaffEntity>getAllStaffs(){
         return staffService.getAllStaffs();
     }
 
+    @Operation(summary = "查询干员", description = "查询干员的API")
     @PostMapping("getStaffByName")
     public StaffEntity getStaffByName(String name){
         return staffService.getStaffByName(name);

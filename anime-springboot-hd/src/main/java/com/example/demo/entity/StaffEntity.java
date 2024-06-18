@@ -12,36 +12,36 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "staff")
 public class StaffEntity {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id",columnDefinition = "人员id(自增）")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",columnDefinition = "人员id(自增）")
+    private Integer id;
 
-//    @Column(name = "name", nullable = false, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
+    @Column(name = "name", nullable = false, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
     private String name;
 
-//    @Column(name = "age", nullable = true)
-    private String age;
+    @Column(name = "age", nullable = true)
+    private Integer age;
 
-//    @Column(name = "gender", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
+    @Column(name = "gender", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
     private String gender;
 
-//    @Column(name = "ethnicity", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
+    @Column(name = "ethnicity", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
     private String ethnicity;
 
-//    @Column(name = "position", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
+    @Column(name = "position", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
     private String position;
 
-//    @Column(name = "tags", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
+    @Column(name = "tags", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
     private String tags;
 
-//    @Column(name = "organize", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
+    @Column(name = "organize", nullable = true, length = 255, columnDefinition = "varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci")
     private String organize;
 
-//    @Column(name = "gmt_create", nullable = true)
+    @Column(name = "gmt_create", nullable = true)
 //    @Temporal(TemporalType.TIMESTAMP)
     private Date gmtCreate;
 
-//    @Column(name = "gmt_modified", nullable = true, updatable = false)
+    @Column(name = "gmt_modified", nullable = true, updatable = false)
 //    @Temporal(TemporalType.TIMESTAMP)
 //    @UpdateTimestamp
     private Date gmtModified;

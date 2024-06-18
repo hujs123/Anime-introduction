@@ -79,6 +79,12 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--swagger        -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.13</version> <!-- 请检查并使用最新版本 -->
+        </dependency>
     </dependencies>
 
     <build>

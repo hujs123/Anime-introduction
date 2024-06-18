@@ -39,6 +39,8 @@ public class StaffService {
         log.info("【查询入参】：staffReqDto - {}", staffReqDto);
         List<StaffEntity> staffEntityList = staffMapper.queryStaffs(staffReqDto.getName());
         log.info("【查询出参】：StaffReqDto - {}", staffEntityList);
+        List<StaffEntity> staffEntityList2 = staffRepository.findByNameContaining(staffReqDto.getName());
+        log.info("【查询出参】：staffEntityList2 - {}", staffEntityList2);
         List<StaffRspDto> staffRspDtoList=new ArrayList<>();
         for (StaffEntity staffEntity:staffEntityList){
             StaffRspDto staffRspDto=new StaffRspDto();
@@ -63,9 +65,13 @@ public class StaffService {
     };
 
     public StaffEntity getStaffByName(String name){
-//        log.info("【入参】：StaffReqDto - {}", name);
+        log.info("【入参】：StaffReqDto - {}", name);
         StaffEntity staffEntity = staffRepository.findByName(name);
-//        log.info("【入参】：StaffReqDto - {}", staffEntity);
+        log.info("【出参】：staffEntity - {}", staffEntity);
+        StaffEntity staffEntity1 = staffRepository.findById(1);
+        log.info("【出参】：staffEntity - {}", staffEntity1);
+        List<StaffEntity> staffEntity2 = staffRepository.findAll();
+        log.info("【出参】：staffEntity - {}", staffEntity2);
         return staffEntity;
     };
 
