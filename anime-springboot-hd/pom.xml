@@ -73,9 +73,16 @@
             <!--            <version>3.3.1</version>-->
             <version>3.4.1</version>
         </dependency>
+        <!--通过注解减少代码的冗余，自动生成getter、setter、equals、hashCode、toString等方法-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>anime-springboot-hd-1.0.0</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
