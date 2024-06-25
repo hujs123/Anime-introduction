@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.StaffReqDto;
 import com.example.demo.dto.StaffRspDto;
+import com.example.demo.entity.InptuEntity;
+import com.example.demo.entity.InvoiceDataEntity;
 import com.example.demo.entity.StaffEntity;
 import com.example.demo.service.StaffService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +11,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
 import java.util.List;
 
 @Slf4j
@@ -46,5 +52,26 @@ public class StaffController {
     @PostMapping("getStaffByName")
     public StaffEntity getStaffByName(String name){
         return staffService.getStaffByName(name);
+    }
+
+
+    @Operation(summary = "电子发票", description = "电子发票")
+    @PostMapping("getdzfp")
+    public String getdzfp() throws JAXBException, XMLStreamException {
+        return staffService.getdzfp();
+    }
+
+    @Operation(summary = "测试", description = "测试")
+    @PostMapping("test")
+    public String test(@RequestBody InvoiceDataEntity invoiceDataEntity)  {
+        return staffService.test(invoiceDataEntity);
+    }
+
+
+    @Operation(summary = "测试2", description = "测试2")
+    @GetMapping("test2")
+    public void test2(@RequestParam String value, HttpServletResponse response)  {
+        //https://health.neuqsoft.com/zzjpay/H13010400915/aio/invoice?serialno=2024060021&visittype=01&amount=0.01&tenantId=H13010400915&paytype=
+         staffService.test2(value,  response);
     }
 }

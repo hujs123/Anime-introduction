@@ -85,6 +85,17 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.13</version> <!-- 请检查并使用最新版本 -->
         </dependency>
+        <!-- alibabajson相关 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.83</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>28.2-jre</version>
+        </dependency>
     </dependencies>
 
     <build>
