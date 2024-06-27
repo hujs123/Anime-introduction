@@ -31,4 +31,10 @@ public class ThirdInterfaceController {
     public ReturnData getPixivs(String name, Integer num, String keyword){
         return thirdInterfaceService.getPixivs(name,num,keyword);
     }
+
+    @Operation(summary = "获取中国省份", description = "获取中国省份")
+    @PostMapping("getProvince")
+    public ReturnData getProvince(){
+        return thirdInterfaceService.getProvince();
+    }
 }

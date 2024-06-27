@@ -34,44 +34,22 @@ public class StaffController {
         return "api/users/hello调用成功";
     }
 
-    @Operation(summary = "查询干员", description = "查询干员的API")
+    @Operation(summary = "查询干员", description = "条件查询干员的API")
     @PostMapping("getStaff")
     public List<StaffRspDto> getStaffs(@RequestBody StaffReqDto staffReqDto) {
-        log.info("【请求地址】:api/users/getStaffs");
-        log.info("【入参】：StaffReqDto - {}", staffReqDto);
         return staffService.getStaff(staffReqDto);
     }
 
-    @Operation(summary = "查询干员", description = "查询所有干员的API")
+    @Operation(summary = "查询所有干员", description = "查询所有干员的API")
     @PostMapping("getAllStaffs")
     public List<StaffEntity>getAllStaffs(){
         return staffService.getAllStaffs();
     }
 
-    @Operation(summary = "查询干员", description = "查询干员的API")
+    @Operation(summary = "查询干员", description = "通过名字查询干员的API")
     @PostMapping("getStaffByName")
-    public StaffEntity getStaffByName(String name){
+    public List<StaffEntity> getStaffByName(String name){
+        log.info("【getStaffByName】：name - {}", name);
         return staffService.getStaffByName(name);
-    }
-
-
-    @Operation(summary = "电子发票", description = "电子发票")
-    @PostMapping("getdzfp")
-    public String getdzfp() throws JAXBException, XMLStreamException {
-        return staffService.getdzfp();
-    }
-
-    @Operation(summary = "测试", description = "测试")
-    @PostMapping("test")
-    public String test(@RequestBody InvoiceDataEntity invoiceDataEntity)  {
-        return staffService.test(invoiceDataEntity);
-    }
-
-
-    @Operation(summary = "测试2", description = "测试2")
-    @GetMapping("test2")
-    public void test2(@RequestParam String value, HttpServletResponse response)  {
-        //https://health.neuqsoft.com/zzjpay/H13010400915/aio/invoice?serialno=2024060021&visittype=01&amount=0.01&tenantId=H13010400915&paytype=
-         staffService.test2(value,  response);
     }
 }

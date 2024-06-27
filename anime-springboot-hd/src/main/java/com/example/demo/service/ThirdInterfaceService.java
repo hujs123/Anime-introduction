@@ -59,6 +59,27 @@ public class ThirdInterfaceService {
             return ReturnData.error();
         }
     }
+
+
+    public ReturnData getProvince() {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = Third_Interface_Province;
+        log.info("【getProvince】：url - {}", url);
+        ResponseEntity<String> ResponseData = restTemplate.getForEntity(url, String.class);
+        log.info("【getProvince】：ResponseData - {}", ResponseData);
+        HttpStatus statusCode = ResponseData.getStatusCode();
+        // 请求成功，处理响应体
+        if (statusCode.equals(HttpStatus.OK)) {
+            // 请求成功，处理响应体
+            String body = ResponseData.getBody();
+            JSONArray jsonArray=JSONArray.parseArray(body);
+            log.info("【getProvince】出参jsonArray： - {}", jsonArray);
+            return ReturnData.ok(jsonArray);
+        } else {
+            return ReturnData.error();
+        }
+    }
+
 };
 
 

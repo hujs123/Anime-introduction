@@ -17,7 +17,7 @@ public class ThirdInterfaceEnums {
     /**
      * 城市获取
      */
-    public static final String Third_Interface_City = "http://www.nmc.cn/rest/province";
+    public static final String Third_Interface_City = "http://www.nmc.cn/rest/province/{code}";
     /**
      * 城市天气预报获取
      */

@@ -12,4 +12,8 @@
         </if>
     </select>
 
+    <select id="queryAllStaffs" resultType="com.example.demo.entity.StaffEntity">
+        select s.* from staff s
+    </select>
+
 </mapper>

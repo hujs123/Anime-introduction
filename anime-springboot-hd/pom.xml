@@ -17,6 +17,8 @@
         <java.version>21</java.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <mybatis.version>2.1.4</mybatis.version>
+<!--        分页查询组件-->
+        <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
     </properties>
     <dependencies>
         <dependency>
@@ -95,6 +97,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>28.2-jre</version>
+        </dependency>
+        <!-- pagehelper 分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.boot.version}</version>
         </dependency>
     </dependencies>
 

@@ -8,33 +8,16 @@ import lombok.ToString;
 @ToString
 public class StaffReqDto {
 
-    /**
-     * 姓名
-     */
+    /**     * 姓名     */
     private String name;
-
-    /**
-     * 性别
-     */
+    /**     * 性别     */
     private String gender;
-
-    /**
-     * 种族
-     */
+    /**     * 种族     */
     private String ethnicity;
-
-    /**
-     * 职位
-     */
+    /**     * 职位     */
     private String position;
-
-    /**
-     * 标签
-     */
+    /**     * 标签     */
     private String tags;
-
-    /**
-     * 组织
-     */
+    /**     * 组织     */
     private String organize;
 }

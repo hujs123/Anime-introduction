@@ -1,12 +1,25 @@
 package com.example.demo.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.config.enums.ReturnData;
+import com.example.demo.dto.ProvinceRspDto;
+import com.example.demo.dto.StaffRspDto;
+import com.example.demo.entity.StaffEntity;
+import com.example.demo.mapper.StaffMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
-import static com.example.demo.config.enums.ThirdInterfaceEnums.Third_Interface_City;
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.*;
+
+import static com.example.demo.config.enums.ThirdInterfaceEnums.Third_Interface_Province;
 
 /**
  * @author hujs
@@ -17,34 +30,45 @@ import static com.example.demo.config.enums.ThirdInterfaceEnums.Third_Interface_
 @Service
 public class SkillsService {
 
-    public ReturnData callThirdInterface(Object object){
-        try{
-            // 将对象转换为字符串，但最好确保它实际上是一个可以转换为字符串的类型
-            String provinceObjectString = String.valueOf(object);
-            log.info("【调用接口】: 转换后的对象字符串 = {}", provinceObjectString);
-            // 尝试解析 JSON 字符串
-            JSONObject jsonObject = JSONObject.parseObject(provinceObjectString);
-            log.info("【调用接口】: 解析后的 JSON 对象 = {}", jsonObject.toJSONString()); // 使用 toJSONString() 输出更清晰的 JSON
-            // 获取 URL 和省份代码，并进行空值检查
-            String url = jsonObject.getString("url"); // 使用 getString() 方法，它会抛出异常如果键不存在
-            String provinceCode = jsonObject.getString("province");
-            log.info("【调用接口】:url"+url);
-            log.info("【调用接口】:provincecode"+provinceCode);
-            String thirdUrl=url;
-            if(url.isEmpty()){
-                thirdUrl=Third_Interface_City;
-            }
-            if(provinceCode.isEmpty()){
-                thirdUrl=thirdUrl+"/ASC";
-            }else{
-                thirdUrl=thirdUrl+"/"+provinceCode;
-            }
-            log.info("【调用接口】:thirdUrl"+thirdUrl);
-        } catch (Exception e) {
-            log.error("【调用接口】: 发生异常", e);
-            // 根据需要处理异常，例如返回一个带有错误信息的 ReturnData 对象
-        }
-        return ReturnData.ok();
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private StaffMapper staffMapper;
+
+    public ReturnData callThirdInterface() {
+        String strurl = Third_Interface_Province;
+        String outJson = restTemplate.postForObject(strurl, null, String.class);
+        JSONArray jsonArray = JSONArray.parseArray(outJson);
+        log.info("【查询出参】： - {}", ReturnData.ok(jsonArray));
+        return ReturnData.ok(jsonArray);
     }
 
+    public ReturnData base64ToImage() {
+        String strurl = Third_Interface_Province;
+        String outJson = restTemplate.postForObject(strurl, null, String.class);
+        JSONArray jsonArray = JSONArray.parseArray(outJson);
+        log.info("【查询出参】： - {}", ReturnData.ok(jsonArray));
+        return ReturnData.ok(jsonArray);
+    }
+
+    public ReturnData httpServletRequest(HttpServletRequest request) {
+        //获取表单request的参数
+        Integer returnParam = Integer.valueOf(request.getParameter("inputParam"));
+        log.info("【httpServletRequest】 returnParam" + returnParam);
+        return ReturnData.ok(returnParam);
+    }
+
+
+    public ReturnData getPageCity(String pageNum, String pageSize) {
+        Integer pagenum = Integer.valueOf(pageNum);
+        Integer pagesize = Integer.valueOf(pageSize);
+        log.info("【getPageCity】pagenum："+pagenum);
+        log.info("【getPageCity】pagesize："+pagesize);
+        PageHelper.startPage(pagenum, pagesize);
+        List<StaffEntity>  staffEntityList=staffMapper.queryAllStaffs();
+        PageInfo<StaffEntity> pageInfo = new PageInfo<>(staffEntityList, pagesize);
+        log.info("【getPageCity】"+pageInfo);
+        return ReturnData.ok(pageInfo);
+    }
 }
