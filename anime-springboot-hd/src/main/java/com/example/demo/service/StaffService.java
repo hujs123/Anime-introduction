@@ -1,48 +1,25 @@
 package com.example.demo.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
+import com.example.demo.config.ResultData;
 import com.example.demo.config.enums.ReturnData;
 import com.example.demo.dto.StaffReqDto;
 import com.example.demo.dto.StaffRspDto;
-import com.example.demo.config.ResultData;
-import com.example.demo.entity.InvoiceDataEntity;
-import com.example.demo.entity.StaffEntity;
+import com.example.demo.entity.StaffInfoEntity;
 import com.example.demo.mapper.StaffMapper;
 import com.example.demo.service.impl.StaffRepository;
-import com.example.demo.thirdInterface.thireInterface;
-import com.example.demo.utils.EncryptionUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.expression.StringValue;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Result;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Base64;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -52,41 +29,60 @@ public class StaffService {
     private StaffRepository staffRepository;
     @Autowired
     private StaffMapper staffMapper;
-    public List<StaffRspDto> getStaff(StaffReqDto staffReqDto) {
+
+    public ReturnData getStaff(StaffReqDto staffReqDto) {
         log.info("【getStaff】：查询入参： - {}", staffReqDto);
-        //xml不会输出日志
-        List<StaffEntity> staffEntityList = staffMapper.queryStaffs(staffReqDto.getName());
-        log.info("【getStaff】：StaffReqDto - {}", staffEntityList);
-        List<StaffRspDto> staffRspDtoList = new ArrayList<>();
-        for (StaffEntity staffEntity : staffEntityList) {
-            StaffRspDto staffRspDto = new StaffRspDto();
-            staffRspDto.setId(staffEntity.getId());
-            staffRspDto.setName(staffEntity.getName());
-            staffRspDto.setGender(staffEntity.getGender());
-            staffRspDto.setAge(staffEntity.getAge());
-            staffRspDto.setEthnicity(staffEntity.getEthnicity());
-            staffRspDto.setPosition(staffEntity.getPosition());
-            staffRspDto.setOrganize(staffEntity.getOrganize());
-            staffRspDtoList.add(staffRspDto);
+        List<StaffInfoEntity> staffInfoEntityList = staffMapper.queryStaffs(staffReqDto.getName());
+        log.info("【getStaff】：出参 - {}", staffInfoEntityList);
+        return ReturnData.ok(staffInfoEntityList);
+    }
+
+    public ReturnData getAllStaffs() {
+        List<StaffInfoEntity> staffInfoEntityList = staffRepository.findAll();
+        log.info("【getAllStaffs】：出参 - {}", staffInfoEntityList);
+        return ReturnData.ok(staffInfoEntityList);
+    }
+
+    public ReturnData getStaffByName(String name) {
+        List<StaffInfoEntity> staffInfoEntityList = staffRepository.findByNameContaining(name);
+        log.info("【getStaffByName】：出参 - {}", staffInfoEntityList);
+        return ReturnData.ok(staffInfoEntityList);
+    }
+
+    public ReturnData addStaff(HttpServletRequest request) {
+        String name = String.valueOf(request.getParameter("name"));
+        String gender = String.valueOf(request.getParameter("gender"));
+        String ethnicity = String.valueOf(request.getParameter("ethnicity"));
+        String position = String.valueOf(request.getParameter("position"));
+        String tags = String.valueOf(request.getParameter("tags"));
+        String star = String.valueOf(request.getParameter("star"));
+
+        StaffInfoEntity staffInfoEntity=new StaffInfoEntity();
+        if (StringUtils.isEmpty(name)) {
+            return ReturnData.error("name不可为空");
         }
-        log.info("【getStaff】：出参 - {}", staffRspDtoList);
-        return staffRspDtoList;
-    }
+        staffInfoEntity.setName(name);
+        if (!StringUtils.isEmpty(gender)) {
+            staffInfoEntity.setGender(gender);
+        }
+        if (!StringUtils.isEmpty(ethnicity)) {
+            staffInfoEntity.setEthnicity(ethnicity);
+        }
+        if (!StringUtils.isEmpty(position)) {
+            staffInfoEntity.setPosition(position);
+        }
+        if (!StringUtils.isEmpty(tags)) {
+            staffInfoEntity.setTags(tags);
+        }
+        if (!StringUtils.isEmpty(star)) {
+            staffInfoEntity.setStar(star);
+        }
+        staffInfoEntity.setGmtCreate(new Date());
+        staffInfoEntity.setGmtModified(new Date());
+        log.info("【addStaff】：存储数据： - {}", staffInfoEntity);
+        staffRepository.save(staffInfoEntity); // 批量保存实体到数据库
+        return ReturnData.ok("添加干员成功");
 
-    ;
-
-    public List<StaffEntity> getAllStaffs() {
-        List<StaffEntity> staffEntityList = staffRepository.findAll();
-        log.info("【getAllStaffs】：staffEntityList - {}", staffEntityList);
-        return staffEntityList;
-    }
-
-    ;
-
-    public List<StaffEntity> getStaffByName(String name) {
-        List<StaffEntity> staffEntityList = staffRepository.findByNameContaining(name);
-        log.info("【getStaffByName】：出参 - {}", staffEntityList);
-        return staffEntityList;
     }
 
 };

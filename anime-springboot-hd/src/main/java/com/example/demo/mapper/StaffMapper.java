@@ -2,7 +2,7 @@ package com.example.demo.mapper;
 
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
-import com.example.demo.entity.StaffEntity;
+import com.example.demo.entity.StaffInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @InterceptorIgnore(tenantLine = "true")
 public interface StaffMapper {
 
-    List<StaffEntity> queryStaffs(@Param("name") String name);
+    List<StaffInfoEntity> queryStaffs(@Param("name") String name);
 
-    List<StaffEntity> queryAllStaffs();
+    List<StaffInfoEntity> queryAllStaffs();
 }

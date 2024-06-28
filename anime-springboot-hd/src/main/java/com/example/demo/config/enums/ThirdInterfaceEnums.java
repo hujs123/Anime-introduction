@@ -15,12 +15,17 @@ public class ThirdInterfaceEnums {
      */
     public static final String Third_Interface_Province = "http://www.nmc.cn/rest/province";
     /**
-     * 城市获取
+     * 城市获取，
      */
     public static final String Third_Interface_City = "http://www.nmc.cn/rest/province/{code}";
     /**
      * 城市天气预报获取
      */
     public static final String Third_Interface_Weather = "http://www.nmc.cn/rest/province";
+
+    /**
+     * 获取电子发票base64
+     */
+    public static final String Third_Interface_EinvoicingBase64 = "http://172.30.10.31:7300/mock/652396bf63eb8c002142ec43/mockmain/getbase64";
 
 }
