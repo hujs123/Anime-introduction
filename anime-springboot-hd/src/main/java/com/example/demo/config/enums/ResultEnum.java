@@ -8,8 +8,8 @@ package com.example.demo.config.enums;
  */
 
 public enum ResultEnum {
-    SUCCESS("1", "成功"),
-    ERROR("0", "失败"),
+    SUCCESS("0", "成功"),
+    ERROR("1", "失败"),
     EXCEPTION("-1", "异常");
 
     private String code;

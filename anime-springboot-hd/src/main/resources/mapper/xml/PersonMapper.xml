@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.PersonMapper">
+
+<select id="getPagePerson" resultType="com.example.demo.entity.PersonInfoEntity">
+    select *
+    from person_info s
+    where 1 = 1
+    <if test="name != null and name != ''">
+        AND s.name =#{name}
+    </if>
+    <if test="gender != null and gender != ''">
+        AND s.gender =#{gender}
+    </if>
+    <if test="ethnicity != null and ethnicity != ''">
+        AND s.ethnicity =#{ethnicity}
+    </if>
+    <if test="position != null and position != ''">
+        AND s.position =#{position}
+    </if>
+    <if test="tags != null and tags != ''">
+        AND s.tags =#{tags}
+    </if>
+    <if test="isStaff != null and isStaff != ''">
+        AND s.isStaff =#{isStaff}
+    </if>
+</select>
+
+
+
+</mapper>

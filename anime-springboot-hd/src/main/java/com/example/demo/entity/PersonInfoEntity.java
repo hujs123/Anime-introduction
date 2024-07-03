@@ -43,6 +43,9 @@ public class PersonInfoEntity {
     @Column(name = "organize", columnDefinition = "组织")
     private String organize;
 
+    @Column(name = "is_staff", columnDefinition = "是否是干员，0 否 ，1 是")
+    private String isStaff;
+
     @Column(name = "gmt_create", columnDefinition = "标签")
     private Date gmtCreate;
 
