@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from '@/router' // 假设您的路由文件在router目录下
 import { setupRouteGuards } from './router/routeGuards'; // 引入路由守卫文件
 import Antd from 'ant-design-vue';
+
 import vuetable from 'vxe-table'
+import 'vxe-table/lib/style.css'
 
 //样式管理
 import './style/common.less';

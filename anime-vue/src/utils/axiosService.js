@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
         // 对响应数据做点什么
         if(response.status === 200){
             const res = response.data;
-            if (res.code !== 0) {
+            if (res.code != 0) {
                 // 你可以在这里抛出错误或做其他处理
                 return Promise.reject(new Error(res.message || 'Error'));
             }

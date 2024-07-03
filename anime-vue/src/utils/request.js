@@ -8,8 +8,7 @@ const secretKey = 'YourSecretKey'; // 在实际应用中，这个值应该通过
 const iv = CryptoJS.enc.Utf8.parse('YourIV'); // IV 必须是 16 字节长
 
 export async function request(url, params, method) {
-    console.log('api')
-    const isencrypt = process.env.VUE_APP_TITLE
+    const isencrypt = process.env.API_ENCRYPT
     if (isencrypt) {
         console.log('加密', url, params)
         if (method == 'GET') {
@@ -26,6 +25,7 @@ export async function request(url, params, method) {
         if (method == 'GET') {
             return await axios.get(url, params)
         } else if (method == 'POST') {
+            console.log("response",axios.post(url, params))
             return await axios.post(url, params)
         }
     }

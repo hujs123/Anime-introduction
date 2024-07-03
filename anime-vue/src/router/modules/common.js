@@ -154,6 +154,13 @@ export const commonRoutes = [
         // 假设您有一个HomeImages组件，这里需要正确导入并使用
         component: () => import('@/views/login/loginPage.vue') // 示例中的动态导入
     },
+    {
+        path: '/staff-info',
+        name: 'staffInfo',
+        meta: {title: '干员界面'},
+        // 假设您有一个HomeImages组件，这里需要正确导入并使用
+        component: () => import('@/views/staffInfo/staffInfoPage.vue') // 示例中的动态导入
+    },
 
 ]
 
