@@ -13,5 +13,5 @@ import java.util.List;
 @InterceptorIgnore(tenantLine = "true")
 public interface PersonMapper {
 
-    List<PersonInfoEntity> getPagePerson(String name, String gender, String ethnicity, String position, String tags,  String isStaff);
+    List<PersonInfoEntity> getPagePerson(List<Integer> integerList ,String name, String gender, String ethnicity,String isStaff);
 }

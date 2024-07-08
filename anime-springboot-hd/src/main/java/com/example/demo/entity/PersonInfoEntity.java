@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * @author hujs
  * @date 2024/06/28
- * @description
+ * @description 人员信息表
  */
 @Entity
 @Data
@@ -25,32 +25,31 @@ public class PersonInfoEntity {
     @Column(name = "name", nullable = false, columnDefinition = "姓名")
     private String name;
 
-    @Column(name = "age", columnDefinition = "年龄")
-    private Integer age;
-
     @Column(name = "gender", columnDefinition = "性别")
     private String gender;
 
     @Column(name = "ethnicity", columnDefinition = "种族")
     private String ethnicity;
 
-    @Column(name = "position", columnDefinition = "职位")
-    private String position;
-
-    @Column(name = "tags", columnDefinition = "标签")
-    private String tags;
-
-    @Column(name = "organize", columnDefinition = "组织")
-    private String organize;
-
     @Column(name = "is_staff", columnDefinition = "是否是干员，0 否 ，1 是")
     private String isStaff;
 
-    @Column(name = "gmt_create", columnDefinition = "标签")
-    private Date gmtCreate;
+    @Column(name = "create_by", columnDefinition = "创建人")
+    private String createBy;
 
-    @Column(name = "gmt_modified", columnDefinition = "标签")
-    private Date gmtModified;
+    @Column(name = "create_time", columnDefinition = "创建时间")
+//    @Temporal(TemporalType.TIMESTAMP) // 指定日期/时间类型
+    private Date createTime;
+
+    @Column(name = "update_by", columnDefinition = "更新人")
+    private String updateBy;
+
+    @Column(name = "update_time", columnDefinition = "更新时间")
+//    @Temporal(TemporalType.TIMESTAMP) // 指定日期/时间类型
+    private Date updateTime;
+
+    @Column(name = "remark", columnDefinition = "备注")
+    private String remark;
 
 
 

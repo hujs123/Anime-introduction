@@ -23,10 +23,12 @@ public class DictService {
     @Autowired
     private DictMapper dictMapper;
 
-    public ReturnData getDictPostion(String dictType) {
-        log.info("【getDictPostion】入参：" + dictType);
+    public ReturnData getDict(String jsonString) {
+        JSONObject jsonObject= JSON.parseObject(jsonString);
+        String dictType = jsonObject.getString("dictType");
+        log.info("【getDict】入参：" + dictType);
         List<DictEntity> dictEntityList = dictMapper.getDictList(dictType);
-        log.info("【getDictPostion】:出参：" + dictEntityList);
+        log.info("【getDict】:出参：" + dictEntityList);
         return ReturnData.ok(dictEntityList);
     }
 }

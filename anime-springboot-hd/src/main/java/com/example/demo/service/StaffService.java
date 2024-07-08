@@ -68,17 +68,9 @@ public class StaffService {
         if (!StringUtils.isEmpty(ethnicity)) {
             staffInfoEntity.setEthnicity(ethnicity);
         }
-        if (!StringUtils.isEmpty(position)) {
-            staffInfoEntity.setPosition(position);
-        }
-        if (!StringUtils.isEmpty(tags)) {
-            staffInfoEntity.setTags(tags);
-        }
         if (!StringUtils.isEmpty(star)) {
             staffInfoEntity.setStar(star);
         }
-        staffInfoEntity.setGmtCreate(new Date());
-        staffInfoEntity.setGmtModified(new Date());
         log.info("【addStaff】：存储数据： - {}", staffInfoEntity);
         staffRepository.save(staffInfoEntity); // 批量保存实体到数据库
         return ReturnData.ok("添加干员成功");

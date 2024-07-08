@@ -37,6 +37,11 @@ public class StaffController {
     public ReturnData getStaffs(@RequestBody StaffReqDto staffReqDto) {
         return staffService.getStaff(staffReqDto);
     }
+    @Operation(summary = "查询干员", description = "条件查询干员的API")
+    @PostMapping("getPageStaff")
+    public ReturnData getPageStaff(@RequestBody StaffReqDto staffReqDto) {
+        return staffService.getStaff(staffReqDto);
+    }
 
     @Operation(summary = "查询所有干员", description = "查询所有干员的API")
     @PostMapping("getAllStaffs")

@@ -23,10 +23,10 @@ public class DictController {
     @Autowired
     private DictService dictService;
 
-    @Operation(summary = "查询干员职阶", description = "查询干员职阶")
-    @PostMapping("/getDictPostion")
-    public ReturnData getDictPostion(@RequestParam String dictType) {
-        log.info("【调用接口】:api/person/getPagePerson");
-        return dictService.getDictPostion(dictType);
+    @Operation(summary = "查询字典", description = "查询字典")
+    @PostMapping("/getDict")
+    public ReturnData getDict(@RequestBody String jsonString) {
+        log.info("【调用接口】:api/person/getDict");
+        return dictService.getDict(jsonString);
     }
 }

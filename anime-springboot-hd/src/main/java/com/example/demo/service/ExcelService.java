@@ -43,12 +43,8 @@ public class ExcelService {
             staffInfoEntity.setName(String.valueOf((row.getCell(1))));
             staffInfoEntity.setGender(String.valueOf((row.getCell(1))));
             staffInfoEntity.setEthnicity(String.valueOf((row.getCell(1))));
-            staffInfoEntity.setPosition(String.valueOf((row.getCell(1))));
-            staffInfoEntity.setTags(String.valueOf((row.getCell(1))));
             staffInfoEntity.setStar(String.valueOf((row.getCell(1))));
             Date date=new Date();
-            staffInfoEntity.setGmtCreate(date);
-            staffInfoEntity.setGmtModified(date);
             staffInfoEntity.setName(String.valueOf((row.getCell(1))));
             staffInfoEntityList.add(staffInfoEntity);
         }

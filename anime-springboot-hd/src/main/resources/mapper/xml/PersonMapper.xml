@@ -4,27 +4,29 @@
 <mapper namespace="com.example.demo.mapper.PersonMapper">
 
 <select id="getPagePerson" resultType="com.example.demo.entity.PersonInfoEntity">
-    select *
-    from person_info s
-    where 1 = 1
+    SELECT *
+    FROM person_info s
+    WHERE 1 = 1
+    <if test="integerList != null and integerList.size() > 0">
+        AND s.id IN
+        <foreach item="itemId" collection="integerList" open="(" separator="," close=")">
+            #{itemId}
+        </foreach>
+    </if>
     <if test="name != null and name != ''">
-        AND s.name =#{name}
+        AND s.name = #{name}
     </if>
     <if test="gender != null and gender != ''">
-        AND s.gender =#{gender}
+        AND s.gender = #{gender}
     </if>
     <if test="ethnicity != null and ethnicity != ''">
-        AND s.ethnicity =#{ethnicity}
+        AND s.ethnicity = #{ethnicity}
     </if>
-    <if test="position != null and position != ''">
-        AND s.position =#{position}
+    <if test="isStaff != null  and ethnicity != ''">
+        AND s.is_staff = #{isStaff}
     </if>
-    <if test="tags != null and tags != ''">
-        AND s.tags =#{tags}
-    </if>
-    <if test="isStaff != null and isStaff != ''">
-        AND s.isStaff =#{isStaff}
-    </if>
+
+
 </select>
 
 

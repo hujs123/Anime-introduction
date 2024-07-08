@@ -122,11 +122,7 @@ public class SkillsService {
                     staffInfoEntity.getName(),
                     staffInfoEntity.getGender(),
                     staffInfoEntity.getEthnicity(),
-                    staffInfoEntity.getPosition(),
-                    staffInfoEntity.getTags(),
                     staffInfoEntity.getStar(),
-                    simpleDateFormat.format(staffInfoEntity.getGmtCreate()),
-                    simpleDateFormat.format(staffInfoEntity.getGmtModified())
             };
             data.add(staffData);
         }
