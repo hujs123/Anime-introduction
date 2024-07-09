@@ -2,11 +2,9 @@ package com.example.demo.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.config.ResultData;
 import com.example.demo.config.enums.ReturnData;
 import com.example.demo.dto.PixivRspDto;
 import lombok.extern.slf4j.Slf4j;
-import org.jboss.jandex.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

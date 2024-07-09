@@ -6,7 +6,10 @@
     <select id="getDictList" resultType="com.example.demo.entity.DictEntity">
         select *
         from dict d
-        where d.dict_type = #{dictType}
+        where 1=1
+        <if test="dictType != null and dictType != ''">
+            AND d.dict_type = #{dictType}
+        </if>
     </select>
 
 </mapper>

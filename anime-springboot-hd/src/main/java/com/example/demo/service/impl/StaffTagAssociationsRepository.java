@@ -2,9 +2,11 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.StaffTagAssociationsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,5 +23,10 @@ public interface StaffTagAssociationsRepository extends JpaRepository<StaffTagAs
             "HAVING COUNT(DISTINCT b.tag_id) = :tagCount", nativeQuery = true)
     List<Integer> findStaffInfoByAllTagsNative(@Param("tagIds") List<Integer> tagIds, @Param("tagCount") int tagCount);
 
+    // 使用@Modifying和@Query注解定义自定义删除操作
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM StaffTagAssociationsEntity sta WHERE sta.staffId  = :staffId")
+    void deleteAllByStaffId(Integer staffId);
 
 }

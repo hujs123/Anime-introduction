@@ -21,7 +21,7 @@ public class DictEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dict_id",columnDefinition = "字典id(自增）")
-    private String dictId;
+    private Integer dictId;
 
     @Column(name = "dict_name", columnDefinition = "参数名称")
     private String dictName;

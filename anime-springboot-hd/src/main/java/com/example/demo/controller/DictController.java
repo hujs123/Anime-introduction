@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Array;
+
+
 /**
  * @author hujs
  * @date 2024/07/03
@@ -28,5 +31,26 @@ public class DictController {
     public ReturnData getDict(@RequestBody String jsonString) {
         log.info("【调用接口】:api/person/getDict");
         return dictService.getDict(jsonString);
+    }
+
+    @Operation(summary = "增加字典字段", description = "增加字典字段")
+    @PostMapping("/addDict")
+    public ReturnData addDict(@RequestBody String jsonString) {
+        log.info("【调用接口】:api/person/getDict");
+        return dictService.addDict(jsonString);
+    }
+
+    @Operation(summary = "增加字典字段", description = "增加字典字段")
+    @PostMapping("/updateDict")
+    public ReturnData updateDict(@RequestBody String jsonString) {
+        log.info("【调用接口】:api/person/getDict");
+        return dictService.updateDict(jsonString);
+    }
+
+    @Operation(summary = "增加字典字段", description = "增加字典字段")
+    @PostMapping("/deleteDict")
+    public ReturnData deleteDict(@RequestBody String jsonString) {
+        log.info("【调用接口】:api/person/getDict");
+        return dictService.deleteDict(jsonString);
     }
 }

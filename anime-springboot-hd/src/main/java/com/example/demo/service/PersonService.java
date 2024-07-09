@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,29 +46,29 @@ public class PersonService {
     private StaffRepository staffRepository;
 
     public ReturnData getPagePerson(String jsonString) {
-        JSONObject jsonObject= JSON.parseObject(jsonString);
+        JSONObject jsonObject = JSON.parseObject(jsonString);
         String name = jsonObject.getString("name");
         String gender = jsonObject.getString("gender");
         String ethnicity = jsonObject.getString("ethnicity");
         String isStaff = jsonObject.getString("isStaff");
         JSONArray jsonArray = jsonObject.getJSONArray("tags");
         log.info("【jsonArray】:" + jsonArray);
-        List<Integer> integerList=new ArrayList<>();
-        if(jsonArray != null && jsonArray.size() > 0){
+        List<Integer> integerList = new ArrayList<>();
+        if (jsonArray != null && jsonArray.size() > 0) {
             List<Integer> tagList = JSONObject.parseArray(jsonArray.toJSONString(), Integer.class);
-            integerList=staffTagAssociationsRepository.findStaffInfoByAllTagsNative(tagList,tagList.size());
+            integerList = staffTagAssociationsRepository.findStaffInfoByAllTagsNative(tagList, tagList.size());
             log.info("【integerList】:" + integerList);
         }
         Integer pageNum = Integer.valueOf(jsonObject.getInteger("pageNum"));
         Integer pageSize = Integer.valueOf(jsonObject.getInteger("pageSize"));
-        if(pageNum.equals(null)){
-            pageNum=1;
+        if (pageNum.equals(null)) {
+            pageNum = 1;
         }
-        if(pageSize.equals(null)){
-            pageNum=10;
+        if (pageSize.equals(null)) {
+            pageNum = 10;
         }
         PageHelper.startPage(pageNum, pageSize);
-        List<PersonInfoEntity> personInfoEntityList = personMapper.getPagePerson(integerList,name,gender,ethnicity,isStaff);
+        List<PersonInfoEntity> personInfoEntityList = personMapper.getPagePerson(integerList, name, gender, ethnicity, isStaff);
         log.info("【getPageCity】" + personInfoEntityList);
         PageInfo<PersonInfoEntity> pageInfo = new PageInfo<>(personInfoEntityList, pageSize);
         log.info("【getPageCity】" + pageInfo);
@@ -76,8 +77,7 @@ public class PersonService {
 
     @Transactional
     public ReturnData addPersonInfo(String jsonString) {
-
-        JSONObject jsonObject= JSON.parseObject(jsonString);
+        JSONObject jsonObject = JSON.parseObject(jsonString);
         String name = jsonObject.getString("name");
         String gender = jsonObject.getString("gender");
         String ethnicity = jsonObject.getString("ethnicity");
@@ -85,45 +85,45 @@ public class PersonService {
         JSONArray tagsList = jsonObject.getJSONArray("tagsList");
         String star = jsonObject.getString("star");
         //查找是否有相同名字人员
-        PersonInfoEntity personInfoEntity1=personRepository.findByName(name);
-        if(personInfoEntity1!=null){
-
+        PersonInfoEntity personInfoEntity1 = personRepository.findByName(name);
+        if (personInfoEntity1 != null) {
+            ReturnData.error("已包含姓名为 " + name + " 的人员。");
         }
         //存储人员信息
-        PersonInfoEntity personInfoEntity=new PersonInfoEntity();
+        PersonInfoEntity personInfoEntity = new PersonInfoEntity();
         personInfoEntity.setName(name);
         personInfoEntity.setGender(gender);
         personInfoEntity.setEthnicity(ethnicity);
         personInfoEntity.setIsStaff(isStaff);
         personInfoEntity.setCreateTime(new Date());
         personInfoEntity.setCreateBy(admin);
-        log.info("【addPersonInfo】personInfoEntity:"+personInfoEntity);
+        log.info("【addPersonInfo】personInfoEntity:" + personInfoEntity);
         personRepository.save(personInfoEntity);
         //若插入人员是干员，则插入干员表，关联干员标签
-        if(isStaff.equals("1")){
+        if (isStaff.equals("1")) {
             //存储干员信息
-            StaffInfoEntity staffInfoEntity=new StaffInfoEntity();
+            StaffInfoEntity staffInfoEntity = new StaffInfoEntity();
             staffInfoEntity.setName(name);
             staffInfoEntity.setGender(gender);
             staffInfoEntity.setEthnicity(ethnicity);
             staffInfoEntity.setStar(star);
             staffInfoEntity.setCreateTime(new Date());
             staffInfoEntity.setCreateBy(admin);
-            log.info("【addPersonInfo】staffInfoEntity:"+staffInfoEntity);
+            log.info("【addPersonInfo】staffInfoEntity:" + staffInfoEntity);
             staffRepository.save(staffInfoEntity);
             // 注意：这里假设staffRepository.save()会立即返回带有ID的实体，或者findByName能正确返回
-            StaffInfoEntity staffInfoEntity1=staffRepository.findByName(name);
+            StaffInfoEntity staffInfoEntity1 = staffRepository.findByName(name);
             //存储干员标签关联信息
-            List<StaffTagAssociationsEntity> staffTagAssociationsEntityList=new ArrayList<>();
-            for(Object tagId : tagsList){
-                StaffTagAssociationsEntity staffTagAssociationsEntity=new StaffTagAssociationsEntity();
+            List<StaffTagAssociationsEntity> staffTagAssociationsEntityList = new ArrayList<>();
+            for (Object tagId : tagsList) {
+                StaffTagAssociationsEntity staffTagAssociationsEntity = new StaffTagAssociationsEntity();
                 staffTagAssociationsEntity.setTagId(Integer.valueOf(tagId.toString()));
                 staffTagAssociationsEntity.setStaffId(staffInfoEntity1.getId());
                 staffTagAssociationsEntity.setCreateBy(admin);
                 staffTagAssociationsEntity.setCreateTime(new Date());
                 staffTagAssociationsEntityList.add(staffTagAssociationsEntity);
             }
-            log.info("【addPersonInfo】staffTagAssociationsEntityList:"+staffTagAssociationsEntityList);
+            log.info("【addPersonInfo】staffTagAssociationsEntityList:" + staffTagAssociationsEntityList);
             staffTagAssociationsRepository.saveAll(staffTagAssociationsEntityList);
 
         }
@@ -132,32 +132,69 @@ public class PersonService {
 
 
     public ReturnData updatePersonInfo(String jsonString) {
-        JSONObject jsonObject= JSON.parseObject(jsonString);
+        log.info("【addPersonInfo】jsonString:" + jsonString);
+        JSONObject jsonObject = JSON.parseObject(jsonString);
+        Integer id = jsonObject.getInteger("id");
         String name = jsonObject.getString("name");
         String gender = jsonObject.getString("gender");
         String ethnicity = jsonObject.getString("ethnicity");
-        String position = jsonObject.getString("position");
-        String organize = jsonObject.getString("organize");
-        String tags = jsonObject.getString("tags");
         String isStaff = jsonObject.getString("isStaff");
-        PersonInfoEntity personInfoEntity=new PersonInfoEntity();
+        JSONArray tagsList = jsonObject.getJSONArray("tagsList");
+        String star = jsonObject.getString("star");
+        if (id == null) {
+            return ReturnData.error("id为空");
+        }
+        //存储人员信息
+        PersonInfoEntity personInfoEntity = personRepository.findById(Long.valueOf(id)).get();
+        if (isStaff.equals("1")) {
+            //查询干员信息表
+            StaffInfoEntity staffInfoEntity = staffRepository.findByName(personInfoEntity.getName());
+            //更新干员表
+            staffInfoEntity.setName(name);
+            staffInfoEntity.setGender(gender);
+            staffInfoEntity.setEthnicity(ethnicity);
+            staffInfoEntity.setStar(isStaff);
+            staffInfoEntity.setStar(star);
+            staffInfoEntity.setUpdateTime(new Date());
+            staffInfoEntity.setUpdateBy(admin);
+            staffRepository.save(staffInfoEntity);
+            log.info("【addPersonInfo】staffInfoEntity:" + staffInfoEntity);
+            //删除对应干员所有标签关联信息
+            staffTagAssociationsRepository.deleteAllByStaffId(staffInfoEntity.getId());
+            //存储干员标签关联信息
+            List<StaffTagAssociationsEntity> staffTagAssociationsEntityList = new ArrayList<>();
+            for (Object tagId : tagsList) {
+                StaffTagAssociationsEntity staffTagAssociationsEntity = new StaffTagAssociationsEntity();
+                staffTagAssociationsEntity.setTagId(Integer.valueOf(tagId.toString()));
+                staffTagAssociationsEntity.setStaffId(staffInfoEntity.getId());
+                staffTagAssociationsEntity.setCreateBy(admin);
+                staffTagAssociationsEntity.setCreateTime(new Date());
+                staffTagAssociationsEntityList.add(staffTagAssociationsEntity);
+            }
+            log.info("【addPersonInfo】staffTagAssociationsEntityList:" + staffTagAssociationsEntityList);
+            staffTagAssociationsRepository.saveAll(staffTagAssociationsEntityList);
+        }
         personInfoEntity.setName(name);
         personInfoEntity.setGender(gender);
         personInfoEntity.setEthnicity(ethnicity);
         personInfoEntity.setIsStaff(isStaff);
+        personInfoEntity.setUpdateTime(new Date());
+        personInfoEntity.setUpdateBy(admin);
+        //更新人员表
         personRepository.save(personInfoEntity);
+        log.info("【addPersonInfo】personInfoEntity:" + personInfoEntity);
         return ReturnData.ok();
     }
 
     public ReturnData deletePersonInfo(String jsonString) {
-        JSONObject jsonObject= JSON.parseObject(jsonString);
+        JSONObject jsonObject = JSON.parseObject(jsonString);
         String id = jsonObject.getString("id");
         personRepository.deleteById(Long.valueOf(id));
         return ReturnData.ok();
     }
 
     public ReturnData uploadPersonsInfo(String jsonString) {
-        JSONObject jsonObject= JSON.parseObject(jsonString);
+        JSONObject jsonObject = JSON.parseObject(jsonString);
         String id = jsonObject.getString("id");
         personRepository.deleteById(Long.valueOf(id));
         return ReturnData.ok();
