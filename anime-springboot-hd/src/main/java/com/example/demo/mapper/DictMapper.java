@@ -12,5 +12,8 @@ import java.util.List;
 @InterceptorIgnore(tenantLine = "true")
 public interface DictMapper {
 
-    List<DictEntity> getDictList(String name);
+    List<DictEntity> getDictList(String dictType);
+
+    List<DictEntity> getDictListByName(String name);
+
 }

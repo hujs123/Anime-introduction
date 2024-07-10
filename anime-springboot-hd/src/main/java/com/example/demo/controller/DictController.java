@@ -19,7 +19,7 @@ import java.sql.Array;
  */
 @Slf4j
 @RestController
-@Tag(name = "字典操作-dict", description = "字典相关信息查询接口的说明")
+@Tag(name = "字典操作-dict", description = "字典相关操作")
 @RequestMapping("/api/dict")
 public class DictController {
 
@@ -29,28 +29,36 @@ public class DictController {
     @Operation(summary = "查询字典", description = "查询字典")
     @PostMapping("/getDict")
     public ReturnData getDict(@RequestBody String jsonString) {
-        log.info("【调用接口】:api/person/getDict");
+        log.info("【调用接口】:api/dict/getDict");
         return dictService.getDict(jsonString);
     }
+
+    @Operation(summary = "分页查询字典", description = "分页查询字典")
+    @PostMapping("/getPageDict")
+    public ReturnData getPageDict(@RequestBody String jsonString) {
+        log.info("【调用接口】:api/dict/getPageDict");
+        return dictService.getPageDict(jsonString);
+    }
+
 
     @Operation(summary = "增加字典字段", description = "增加字典字段")
     @PostMapping("/addDict")
     public ReturnData addDict(@RequestBody String jsonString) {
-        log.info("【调用接口】:api/person/getDict");
+        log.info("【调用接口】:api/dict/addDict");
         return dictService.addDict(jsonString);
     }
 
-    @Operation(summary = "增加字典字段", description = "增加字典字段")
+    @Operation(summary = "修改字典字段", description = "修改字典字段")
     @PostMapping("/updateDict")
     public ReturnData updateDict(@RequestBody String jsonString) {
-        log.info("【调用接口】:api/person/getDict");
+        log.info("【调用接口】:api/dict/updateDict");
         return dictService.updateDict(jsonString);
     }
 
-    @Operation(summary = "增加字典字段", description = "增加字典字段")
+    @Operation(summary = "删除字典字段", description = "删除字典字段")
     @PostMapping("/deleteDict")
     public ReturnData deleteDict(@RequestBody String jsonString) {
-        log.info("【调用接口】:api/person/getDict");
+        log.info("【调用接口】:api/dict/deleteDict");
         return dictService.deleteDict(jsonString);
     }
 }

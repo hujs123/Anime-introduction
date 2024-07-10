@@ -29,7 +29,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "人员操作-person", description = "人员相关信息查询接口的说明")
+@Tag(name = "人员操作-person", description = "人员信息相关操作")
 @RequestMapping("/api/person")
 public class PersonController {
 

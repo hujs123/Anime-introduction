@@ -5,11 +5,16 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.config.enums.ReturnData;
 import com.example.demo.entity.DictEntity;
+import com.example.demo.entity.PersonInfoEntity;
 import com.example.demo.mapper.DictMapper;
 import com.example.demo.service.impl.DictRepository;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,9 +44,29 @@ public class DictService {
         return ReturnData.ok(dictEntityList);
     }
 
+    public ReturnData getPageDict(String jsonString) {
+        JSONObject jsonObject = JSON.parseObject(jsonString);
+        String name = jsonObject.getString("name");
+        log.info("【getPageDict】name:" + name);
+        Integer pageNum = Integer.valueOf(jsonObject.getInteger("pageNum"));
+        Integer pageSize = Integer.valueOf(jsonObject.getInteger("pageSize"));
+        if (pageNum.equals(null)) {
+            pageNum = 1;
+        }
+        if (pageSize.equals(null)) {
+            pageNum = 10;
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        List<DictEntity> dictEntityList = dictMapper.getDictListByName( name);
+        log.info("【getPageDict】dictEntityList:" + dictEntityList);
+        PageInfo<DictEntity> pageInfo = new PageInfo<>(dictEntityList, pageSize);
+        log.info("【getPageDict】pageInfo:" + pageInfo);
+        return ReturnData.ok(pageInfo);
+    }
+
     public ReturnData addDict(String jsonString) {
         JSONObject jsonObject= JSON.parseObject(jsonString);
-        log.info("【getDict】入参：jsonObject:"+jsonObject);
+        log.info("【addDict】入参：jsonObject:"+jsonObject);
         String dict_name = jsonObject.getString("dict_name");
         String dict_type = jsonObject.getString("dict_type");
         String dict_value = jsonObject.getString("dict_value");
@@ -60,7 +85,7 @@ public class DictService {
 
     public ReturnData updateDict(String jsonString) {
         JSONObject jsonObject= JSON.parseObject(jsonString);
-        log.info("【getDict】入参：jsonObject:"+jsonObject);
+        log.info("【updateDict】入参：jsonObject:"+jsonObject);
         Integer dict_id = jsonObject.getInteger("dict_id");
         String dict_name = jsonObject.getString("dict_name");
         String dict_type = jsonObject.getString("dict_type");
@@ -75,7 +100,7 @@ public class DictService {
         dictEntity.setCreateTime(new Date());
         dictEntity.setCreateBy(admin);
         dictRepository.save(dictEntity);
-        log.info("【addDict】:dictEntity："+dictEntity );
+        log.info("【updateDict】:dictEntity："+dictEntity );
         return ReturnData.ok();
     }
 
