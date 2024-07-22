@@ -25,6 +25,9 @@ public class Demo3Application implements CommandLineRunner {
     @Value("${springdoc.swagger-ui.path:/swagger-ui.html}") // 默认路径，也可以从配置文件中获取
     private String swaggerUiPath;
 
+    @Value("${server.port:/8080}") // 默认路径，也可以从配置文件中获取
+    private String serverPort;
+
     @Value("${server.servlet.context-path:/}") // 应用上下文路径，如果有的话
     private String contextPath;
 
@@ -39,7 +42,7 @@ public class Demo3Application implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
         // 假设你使用的是默认的服务器端口8080
-        String baseUrl = "http://localhost:8080";
+        String baseUrl = "http://localhost"+":"+serverPort;
         // 如果你的应用有上下文路径，则拼接上
         if (!contextPath.isEmpty() && !"/".equals(contextPath)) {
             baseUrl += contextPath;

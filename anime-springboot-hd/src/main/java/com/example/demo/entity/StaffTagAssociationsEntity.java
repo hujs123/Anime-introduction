@@ -25,8 +25,14 @@ public class StaffTagAssociationsEntity {
     @Column(name = "staff_id", columnDefinition = "干员id")
     private Integer staffId;
 
+    @Column(name = "staff_name", columnDefinition = "干员姓名")
+    private String staffName;
+
     @Column(name = "tag_id", columnDefinition = "标签id")
     private Integer tagId;
+
+    @Column(name = "tag_name", columnDefinition = "标签名称")
+    private String tagName;
 
     @Column(name = "create_by", columnDefinition = "创建人")
     private String createBy;

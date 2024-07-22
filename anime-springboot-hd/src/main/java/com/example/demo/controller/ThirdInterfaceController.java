@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/thirdInterface")
 public class ThirdInterfaceController {
 
+    @Operation(summary = "hello罗德岛测试", description = "hello罗德岛测试的API")
+    @GetMapping("/hello")
+    public String hello() {
+        log.info("【调用接口】:api/users/hello");
+        return "api/users/hello调用成功";
+    }
+
     @Autowired
     private ThirdInterfaceService thirdInterfaceService;
 

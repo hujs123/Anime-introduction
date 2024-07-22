@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Repository
 public interface StaffTagAssociationsRepository extends JpaRepository<StaffTagAssociationsEntity, Long> {
-    @Query(value = "SELECT a.* FROM staff_info a INNER JOIN staff_tag_associations b ON a.id = b.staff_id " +
+    @Query(value = "SELECT a.id FROM staff_info a INNER JOIN staff_tag_associations b ON a.id = b.staff_id " +
             "WHERE b.tag_id IN :tagIds " +
             "GROUP BY a.id " +
             "HAVING COUNT(DISTINCT b.tag_id) = :tagCount", nativeQuery = true)

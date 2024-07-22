@@ -18,8 +18,11 @@ import java.util.Date;
 public class StaffInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",columnDefinition = "人员id(自增）")
+    @Column(name = "id",columnDefinition = "干员id(自增）")
     private Integer id;
+
+    @Column(name = "person_id",columnDefinition = "人员id")
+    private Integer personId;
 
     @Column(name = "name", nullable = false, columnDefinition = "姓名")
     private String name;
@@ -37,14 +40,12 @@ public class StaffInfoEntity {
     private String createBy;
 
     @Column(name = "create_time", columnDefinition = "创建时间")
-//    @Temporal(TemporalType.TIMESTAMP) // 指定日期/时间类型
     private Date createTime;
 
     @Column(name = "update_by", columnDefinition = "更新人")
     private String updateBy;
 
     @Column(name = "update_time", columnDefinition = "更新时间")
-//    @Temporal(TemporalType.TIMESTAMP) // 指定日期/时间类型
     private Date updateTime;
 
     @Column(name = "remark", columnDefinition = "备注")

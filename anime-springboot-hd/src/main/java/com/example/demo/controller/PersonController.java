@@ -68,11 +68,6 @@ public class PersonController {
             return ReturnData.error("文件不能为空");
         }
         List<StaffInfoEntity> staffInfoEntityList = new ArrayList<>();
-        //前端
-//     <form method="post" action="/api/upload/excel" enctype="multipart/form-data">
-//     <input type="file" name="file" required>
-//        <button type="submit">上传</button>
-//    </form>
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0); // 假设数据在第一张表上
             Iterator<Row> rowIterator = sheet.iterator();

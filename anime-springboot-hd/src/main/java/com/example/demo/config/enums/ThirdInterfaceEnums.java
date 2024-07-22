@@ -26,6 +26,7 @@ public class ThirdInterfaceEnums {
     /**
      * 获取电子发票base64
      */
-    public static final String Third_Interface_EinvoicingBase64 = "http://172.30.10.31:7300/mock/652396bf63eb8c002142ec43/mockmain/getbase64";
+    public static final String Third_Interface_EinvoicingBase64 = "https://mock.presstime.cn/mock/6523c6972510f7001a401ce6/mockmain/getPngBase64";
+
 
 }

@@ -2,6 +2,7 @@ package com.example.demo.mapper;
 
 
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.example.demo.entity.PersonInfoEntity;
 import com.example.demo.entity.StaffInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,4 +16,7 @@ public interface StaffMapper {
     List<StaffInfoEntity> queryStaffs(@Param("name") String name);
 
     List<StaffInfoEntity> queryAllStaffs();
+
+    List<StaffInfoEntity> getPageStaff(List<Integer> integerList , String name, String gender, String ethnicity, String isStaff);
+
 }

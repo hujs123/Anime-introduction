@@ -46,7 +46,7 @@ public class DictService {
 
     public ReturnData getPageDict(String jsonString) {
         JSONObject jsonObject = JSON.parseObject(jsonString);
-        String name = jsonObject.getString("name");
+        String name = jsonObject.getString("dictType");
         log.info("【getPageDict】name:" + name);
         Integer pageNum = Integer.valueOf(jsonObject.getInteger("pageNum"));
         Integer pageSize = Integer.valueOf(jsonObject.getInteger("pageSize"));

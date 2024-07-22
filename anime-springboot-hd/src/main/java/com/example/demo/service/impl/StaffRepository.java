@@ -12,7 +12,10 @@ public interface StaffRepository extends JpaRepository<StaffInfoEntity, Long> {
 
     StaffInfoEntity findByName(String name);
 
-    StaffInfoEntity findById(Integer Id);
+    StaffInfoEntity deleteById(Integer Id);
+
+    StaffInfoEntity findByPersonId(Integer personId);
+
 
     @Query("SELECT s FROM StaffInfoEntity s WHERE s.name LIKE %?1%")
     List<StaffInfoEntity> findByNameContaining(String name);

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.config.enums.ReturnData;
 import com.example.demo.entity.StaffInfoEntity;
-import com.example.demo.service.ExcelService;
 import com.example.demo.service.SkillsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,6 +13,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,19 +41,29 @@ public class SkillsController {
     @Autowired
     private SkillsService skillsService;
 
-    @Autowired
-    private ExcelService excelService;
-
     @Operation(summary = "调用接口", description = "调用第三方接口")
     @PostMapping("/callThirdInterface")
     public ReturnData callThirdInterface() {
         return skillsService.callThirdInterface();
     }
 
-    @Operation(summary = "base64转Image", description = "调用第三方接口")
+    @Operation(summary = "base64转Image", description = "base64转Image")
     @GetMapping("/base64ToImage")
     public void base64ToImage(HttpServletResponse response) {
+        log.info("【base64ToImage】：进入方法");
         skillsService.base64ToImage(response);
+    }
+
+    @Operation(summary = "base64转Pdf", description = "base64转Pdf")
+    @GetMapping("/base64ToPdf")
+    public void base64ToPdf(HttpServletResponse response) {
+        skillsService.base64ToPdf(response);
+    }
+
+    @Operation(summary = "image转Base64", description = "image转Base64")
+    @GetMapping("/imageToBase64")
+    public void imageToBase64(HttpServletResponse response) {
+         skillsService.imageToBase64(response);
     }
 
     @Operation(summary = "表单入参查询", description = "表单入参查询")
@@ -82,11 +93,6 @@ public class SkillsController {
             return ResponseEntity.badRequest().body("文件不能为空");
         }
         List<StaffInfoEntity> staffInfoEntityList = new ArrayList<>();
-        //前端
-//     <form method="post" action="/api/upload/excel" enctype="multipart/form-data">
-//     <input type="file" name="file" required>
-//        <button type="submit">上传</button>
-//    </form>
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0); // 假设数据在第一张表上
             Iterator<Row> rowIterator = sheet.iterator();
@@ -111,5 +117,20 @@ public class SkillsController {
         } catch (IOException e) {
             return ResponseEntity.internalServerError().body("解析Excel文件时发生错误：" + e.getMessage());
         }
+    }
+
+    @Operation(summary = "上传文件到minio", description = "上传文件到minio")
+    @PostMapping("/uploadFile")
+    public void uploadFile(@RequestParam("file") MultipartFile file)  {
+        log.info("【uploadFile】进入方法");
+        skillsService.uploadFile(file);
+    }
+
+    @Operation(summary = "从minio获取文件", description = "从minio获取文件")
+    @GetMapping("/getFileOnMinio/{objectName}")
+    public ResponseEntity<Resource> getFileOnMinio( @PathVariable String objectName)  {
+        log.info("【getFileOnMinio】进入方法");
+        log.info("【getFileOnMinio】objectName:"+objectName);
+        return skillsService.getFileOnMinio(objectName);
     }
 }
