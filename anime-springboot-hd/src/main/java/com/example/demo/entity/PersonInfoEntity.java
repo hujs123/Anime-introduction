@@ -31,6 +31,9 @@ public class PersonInfoEntity {
     @Column(name = "ethnicity", columnDefinition = "种族")
     private String ethnicity;
 
+    @Column(name = "image_name", columnDefinition = "图片名称")
+    private String imageName;
+
     @Column(name = "is_staff", columnDefinition = "是否是干员，0 否 ，1 是")
     private String isStaff;
 

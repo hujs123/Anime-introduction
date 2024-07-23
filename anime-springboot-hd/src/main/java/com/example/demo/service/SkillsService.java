@@ -11,10 +11,8 @@ import com.itextpdf.text.*;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
-import io.minio.StatObjectArgs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -85,26 +83,72 @@ public class SkillsService {
     private ResourceLoader resourceLoader;
 
     public void base64ToImage(HttpServletResponse response) {
+        //单文件
+//        //获取base64字符串
+//        String strurl = Third_Interface_EinvoicingBase64;
+//        String outJson = restTemplate.postForObject(strurl, null, String.class);
+//        JSONObject jsonObject = JSONObject.parseObject(outJson);
+//        log.info("【base64ToImage】： - {}", jsonObject);
+//        JSONObject jsonObject2= (JSONObject) jsonObject.get("data");
+//        String base64 = (String) jsonObject2.get("base64");
+//
+//        try {
+//            //将Base64解码成字节数组
+//            byte[] bytes = Base64.getDecoder().decode(base64);
+//            //构建字节数组输入流
+//            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+//            //通过ImageIO将字节输入流转化为BufferedImage
+//            BufferedImage bufferedImage = ImageIO.read(bais);
+//            //20240624 对接新禾添加（扫描二维码后显示乱码，解码问题）
+//            response.setContentType("image/png");
+//            //写入到输出流
+//            ImageIO.write(bufferedImage, "png", response.getOutputStream());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            log.error(e.getMessage());
+//        }
+
+        //多文件数组
         //获取base64字符串
         String strurl = Third_Interface_EinvoicingBase64;
         String outJson = restTemplate.postForObject(strurl, null, String.class);
         JSONObject jsonObject = JSONObject.parseObject(outJson);
         log.info("【base64ToImage】： - {}", jsonObject);
-        JSONObject jsonObject2= (JSONObject) jsonObject.get("data");
-        String base64 = (String) jsonObject2.get("base64");
-
+        JSONArray jsonArray=  (JSONArray) jsonObject.get("data");
+        log.info("【jsonArray】："+ jsonArray);
+        List<String> stringList=JSONArray.parseArray(jsonArray.toJSONString(),String.class);
+        log.info("【stringList】："+ stringList);
         try {
-            //将Base64解码成字节数组
-            byte[] bytes = Base64.getDecoder().decode(base64);
-            //构建字节数组输入流
-            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-            //通过ImageIO将字节输入流转化为BufferedImage
-            BufferedImage bufferedImage = ImageIO.read(bais);
-            //20240624 对接新禾添加（扫描二维码后显示乱码，解码问题）
-            response.setContentType("image/png");
-            //写入到输出流
-            ImageIO.write(bufferedImage, "png", response.getOutputStream());
-        } catch (IOException e) {
+            // 创建输出流
+            OutputStream outputStream = response.getOutputStream();
+            // 创建PDF文档对象
+            Document document = new Document(PageSize.A4);
+            java.io.ByteArrayOutputStream pdfOutputStream = new java.io.ByteArrayOutputStream();
+            PdfWriter.getInstance(document, pdfOutputStream);
+            document.open();
+
+            // 将每个Base64图片字符串转换为图片并添加到PDF文档中
+            for (String base64ImageString : stringList) {
+                // 解码Base64字符串
+                byte[] imageBytes = Base64.getDecoder().decode(base64ImageString);
+                // 创建Image对象
+                Image image = Image.getInstance(imageBytes);
+                // 设置图片位置和大小（可根据需要调整）
+                image.setAbsolutePosition(0, 0);
+                image.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+                // 添加图片到PDF文档
+                document.add(image);
+            }
+            // 关闭文档对象
+            document.close();
+            // 将PDF数据写入响应流
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=dianzifapiao.pdf");
+            response.setContentLength(pdfOutputStream.size());
+            pdfOutputStream.writeTo(outputStream);
+            // 刷新缓冲并关闭输出流
+            outputStream.flush();
+        } catch (IOException | DocumentException e) {
             e.printStackTrace();
             log.error(e.getMessage());
         }

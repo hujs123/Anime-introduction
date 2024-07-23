@@ -27,7 +27,7 @@
       </a-form-item>
       <a-form-item label="职阶">
         <a-select v-model:value="queryParams.position" placeholder="请选择人员职阶"
-                  style="width: 220px">
+                  style="width: 220px" allowClear >
           <a-select-option v-for="item of positionTypeList" :key="item.dictKey" :value="item.dictKey">
             {{ item.dictValue }}
           </a-select-option>
@@ -45,17 +45,22 @@
 
     <div>
       <div>
-        <button @click="queryStaff">查询干员</button>
-        <button @click="queryStaff">上传干员</button>
-        <button @click="test">确认</button>
+        <button @click="queryPerson">查询</button>
+        <button @click="uploadPerson">上传</button>
+        <button @click="addPerson">新增</button>
+        <button @click="updatePerson">修改</button>
+        <button @click="deletePerson">删除</button>
         <button @click="toHomePage">返回首页</button>
       </div>
     </div>
 
     <div>
       <vxe-table
+          border
           style="height: 600px"
-          :data="tableData">
+          :data="tableData"
+          ref="tableRef">
+        <vxe-column type="checkbox" width="60"></vxe-column>
         <vxe-column type="seq" width="70" title="序号"></vxe-column>
         <vxe-column field="name" title="姓名"></vxe-column>
         <vxe-column field="gender" title="性别"></vxe-column>
@@ -87,6 +92,8 @@ import {useRouter} from 'vue-router'
 import {request} from "@/utils/request";
 
 const router = useRouter()
+
+const tableRef = ref()
 const tableData = ref([])
 const queryParams = ref({
   name: null,
@@ -116,20 +123,23 @@ onMounted(async () => {
 const init = async () => {
   await queryPostionDict()
   await queryTageDict()
-  await queryStaff()
+  await queryPerson()
 
 }
-const test=()=>{
-  console.log('tags',queryParams.value.tags)
-}
 //查询人员
-const queryStaff = async () => {
+const queryPerson = async () => {
   await request('/api/person/getPagePerson', queryParams.value, 'POST').then(res => {
     let response = res
     console.log("response", response)
     if (response.code == 0) {
-      tableData.value = response.data.list
-      total.value = response.data.total
+      if(response.data!=null){
+        tableData.value = response.data.list
+        total.value = response.data.total
+      }else{
+        tableData.value = []
+        total.value = 0
+      }
+
     } else {
       tableData.value = []
     }
@@ -138,12 +148,39 @@ const queryStaff = async () => {
   })
 }
 
+//增加人员
+const addPerson = async () => {
+  console.log('addPerson')
+}
+
+//上传人员
+const uploadPerson = async () => {
+  console.log('uploadPerson')
+}
+
+
+//修改人员
+const updatePerson = async () => {
+  console.log('updatePerson')
+}
+
+
+//删除人员
+const deletePerson = async () => {
+  console.log('deletePerson')
+  const $table = tableRef.value
+  if ($table) {
+    $table.clearCheckboxRow()
+  }
+}
+
+
 // 查询干员职阶字典
 const queryPostionDict = async () => {
   let param = {
-    dictType: "tag_type"
+    dictType: "postion_type"
   }
-  await request('/api/dict/getDictPostion', param, 'POST').then(res => {
+  await request('/api/dict/getDict', param, 'POST').then(res => {
     let response = res
     console.log("response", response)
     if (response.code == 0) {
@@ -158,9 +195,9 @@ const queryPostionDict = async () => {
 // 查询干员tag字典
 const queryTageDict = async () => {
   let param = {
-    dictType: "postion_type"
+    dictType: "tag_type"
   }
-  await request('/api/dict/getDictPostion', param, 'POST').then(res => {
+  await request('/api/dict/getDict', param, 'POST').then(res => {
     let response = res
     console.log("response", response)
     if (response.code == 0) {
@@ -178,18 +215,19 @@ const handleSizeChange = (curr, size) => {
   queryParams.value.pageSize = size;
   currentPage.value = 1;
   queryParams.value.pageNum = 1;
-  queryStaff();
+  queryPerson();
 }
 //更换页码
 const handleCurrentChange = (curr) => {
   currentPage.value = curr;
   queryParams.value.pageNum = curr
-  queryStaff();
+  queryPerson();
 }
 
 const getPageTotalTitle = (total) => {
   return "共" + total + "条记录"
 }
+
 //返回首页
 const toHomePage = async () => {
   router.push('/') // 使用router实例的push方法进行导航

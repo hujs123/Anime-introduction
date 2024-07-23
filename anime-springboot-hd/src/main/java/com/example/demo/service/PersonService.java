@@ -11,6 +11,7 @@ import com.example.demo.entity.StaffInfoEntity;
 import com.example.demo.entity.StaffTagAssociationsEntity;
 import com.example.demo.entity.StaffTagEntity;
 import com.example.demo.mapper.PersonMapper;
+import com.example.demo.service.ConfigService.FunctionService;
 import com.example.demo.service.impl.PersonRepository;
 import com.example.demo.service.impl.StaffRepository;
 import com.example.demo.service.impl.StaffTagAssociationsRepository;
@@ -36,6 +37,10 @@ import static com.example.demo.config.enums.AdminMessage.admin;
 @Slf4j
 @Service
 public class PersonService {
+
+
+    @Autowired
+    private FunctionService functionService;
 
     @Autowired
     private PersonMapper personMapper;

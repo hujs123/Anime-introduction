@@ -25,7 +25,6 @@ export async function request(url, params, method) {
         if (method == 'GET') {
             return await axios.get(url, params)
         } else if (method == 'POST') {
-            console.log("response",axios.post(url, params))
             return await axios.post(url, params)
         }
     }

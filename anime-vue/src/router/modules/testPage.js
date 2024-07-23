@@ -2,7 +2,7 @@ export const testPageRoutes = [
     {
         path: '/test-page',
         name: 'testPage',
-        meta: {title: '测试页面'},
+        meta: {title: '测试页面1'},
         // 假设您有一个HomeImages组件，这里需要正确导入并使用
         component: () => import('@/views/test/testPage.vue') // 示例中的动态导入
     },
