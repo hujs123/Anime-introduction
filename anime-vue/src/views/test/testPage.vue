@@ -19,19 +19,41 @@
       <button @click="test">测试非加密网关</button>
       <button @click="toEncrypt">信息加密</button>
       <button @click="toDecrypt">信息解密</button>
+      <!-- 触发按钮 -->
+      <button type="primary" @click="showModals= true">
+        打开表单弹窗2
+      </button>
       <button @click="toHomePage">返回首页</button>
     </div>
+
+    <AddPersonPage :mshowModals="showModals" :mhandle-cancel="handleCancel" :mhandle-ok="handleOk"></AddPersonPage>
+<!--    <AddPersonPage :mshowModals="showModals"></AddPersonPage>-->
   </div>
 </template>
 <script setup>
 import {ref,onMounted} from "vue";
 import { useRouter } from 'vue-router' // 使用useRouter hook来获取router实例
 import axios from "axios";
+// import { AModal, AForm, AFormItem, AInput } from 'ant-design-vue';
 import {encryptByAes,decryptByAes} from "@/utils/encrypt";
+import AddPersonPage from "@/views/personInfo/addPersonPage";
 const router = useRouter() // 使用useRouter hook代替直接导入router实例
 const message = ref("图片页面");
 
 
+// 控制弹窗显示
+const showModals = ref(false);
+// 处理弹窗的确定按钮点击
+function handleOk() {
+  console.log('点击确认按钮')
+  showModals.value = false;
+}
+
+// 处理弹窗的取消按钮点击
+function handleCancel() {
+  console.log('点击取消按钮')
+  showModals.value = false;
+}
 
 onMounted(() => {
   init()

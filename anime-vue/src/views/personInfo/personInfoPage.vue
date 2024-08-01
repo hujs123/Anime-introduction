@@ -48,7 +48,6 @@
         <button @click="queryPerson">查询</button>
         <button @click="uploadPerson">上传</button>
         <button @click="addPerson">新增</button>
-        <button @click="updatePerson">修改</button>
         <button @click="deletePerson">删除</button>
         <button @click="toHomePage">返回首页</button>
       </div>
@@ -70,6 +69,17 @@
         <vxe-column field="star" title="星级"></vxe-column>
         <vxe-column field="organize" title="组织"></vxe-column>
         <vxe-column field="isStaff" title="是否干员"></vxe-column>
+        <vxe-column  title="修改"></vxe-column>
+        <vxe-column  title="查看图片"></vxe-column>
+        <!-- 合并后的操作列 -->
+        <vxe-column title="操作" min-width="200" fixed="right">
+          <template #default="{ row }">
+            <div>
+              <a class="action-link" @click="updatePerson(row)">修改</a>   |
+              <a class="action-link" @click="getPersonImage(row)">查看图片</a>
+            </div>
+          </template>
+        </vxe-column>
       </vxe-table>
       <a-pagination
           :current="currentPage"
@@ -114,7 +124,7 @@ const currentPage = ref(1)
 const pageSize = ref(10)
 const total = ref(0)
 const pageSizeOption = ref([10, 20, 50, 100])
-
+const visible = ref(false);
 
 onMounted(async () => {
   await init()
@@ -126,6 +136,7 @@ const init = async () => {
   await queryPerson()
 
 }
+
 //查询人员
 const queryPerson = async () => {
   await request('/api/person/getPagePerson', queryParams.value, 'POST').then(res => {
@@ -139,7 +150,6 @@ const queryPerson = async () => {
         tableData.value = []
         total.value = 0
       }
-
     } else {
       tableData.value = []
     }
@@ -150,7 +160,8 @@ const queryPerson = async () => {
 
 //增加人员
 const addPerson = async () => {
-  console.log('addPerson')
+  console.log('modelvisible.value',visible.value)
+  visible.value=true
 }
 
 //上传人员
@@ -160,8 +171,19 @@ const uploadPerson = async () => {
 
 
 //修改人员
-const updatePerson = async () => {
-  console.log('updatePerson')
+const updatePerson = async (row) => {
+  console.log('updatePerson',row)
+}
+
+//查看人员图片
+const getPersonImage=(row)=>{
+  // 处理查看图片逻辑
+  if (row.imageUrl) {
+    // 这里可以打开图片预览对话框，或者执行其他操作
+    console.log('查看图片', row.imageUrl);
+  } else {
+    console.log('无图片');
+  }
 }
 
 
@@ -257,5 +279,13 @@ const toHomePage = async () => {
     border: 1px solid #999999;
     text-align: center;
   }
+}
+
+/* 使用 scoped 属性确保样式只应用于当前组件 */
+.action-link {
+  /* 你可以在这里添加更多的样式 */
+  cursor: pointer; /* 当鼠标悬停时，光标变为小手形状 */
+  /* 其他样式，如边距、填充、字体大小等 */
+  margin-right: 10px; /* 例如，给链接之间添加一些间距 */
 }
 </style>
