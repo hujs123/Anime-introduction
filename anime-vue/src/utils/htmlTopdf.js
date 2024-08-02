@@ -1,12 +1,8 @@
-/**
- * HTML页面渲染成图片，然后转换为pdf(A4/A5)
- */
+/* eslint-disable */
+// 页面导出为pdf格式,A4格式
 import html2Canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 import dayjs from 'dayjs'
-
-//激光打印机默认纸张大小：A5:5 ,A4:4
-const htmlToPdfSize='4'
 
 const vh2coptions = {
   allowTaint: false,
@@ -18,26 +14,34 @@ const vh2coptions = {
   background: '#FFFFFF', //如果指定的div没有设置背景色会默认成黑色
 }
 const htmlTopdf = {
-  getPdf(htmldom, filename) {
-    var a4Width = 128
-    var a4Height = 190
-    var pdfstyle='a5'
-    if(htmlToPdfSize=='4'){
+  getPdf(htmldom, filename,PdfFormat,PdfSize) {
+    //默认a5大小，横向打印
+    var a4Width = 190
+    var a4Height = 128
+    // var pdfstyle='a5'
+    var pdfstyle=[210,148]
+    if(PdfSize=='4'){
       //A4大小，210mm x 297mm，四边各保留10mm的边距，显示区域190x277
-       a4Width = 190
-       a4Height = 277
-       pdfstyle='a4'
-      // pdfstyle=[297,210]
-    }else{
-      //A5大小，148mm x 210mm，四边各保留10mm的边距，128x190
-       a4Width = 128
-       a4Height = 190
-      // a4Width = 190
-      // a4Height = 128
-      //生成pdf页面大小
-      pdfstyle='a5'
-      // pdfstyle=[210,148]
-
+      if(PdfFormat=='0'){
+        a4Width = 277
+        a4Height = 190
+        pdfstyle=[297,210]
+      }else{
+        a4Width = 190
+        a4Height = 277
+        pdfstyle='a4'
+      }
+    }else if(PdfSize=='5'){
+      //A5大小，148mm x 210mm，四边各保留10mm的边距，显示区域128x190
+      if(PdfFormat=='0'){
+        a4Width = 190
+        a4Height = 128
+        pdfstyle=[210,148]
+      }else{
+        a4Width = 128
+        a4Height = 190
+        pdfstyle='a5'
+      }
     }
     console.log(a4Width,a4Height,pdfstyle)
     /**
@@ -49,7 +53,7 @@ const htmlTopdf = {
     }else{
       vh2coptions.scale=4
     }
-   console.log('分辨率',vh2coptions.scale)
+    console.log('分辨率',vh2coptions.scale)
     return new Promise((resolve, reject) => {
       try {
         html2Canvas(htmldom, vh2coptions).then(canvas => {
@@ -60,7 +64,12 @@ const htmlTopdf = {
           //返回一个包含图片展示的 data URI
           var pageData = canvas.toDataURL('image/jpeg', 1.0)
           //方向：p（纵向），I（横向）,测量单位：mm，格式：a4
-          var pdf = new jsPDF('p', 'mm', pdfstyle)
+          var pdf = null
+          if(PdfFormat=='0'){
+            pdf = new jsPDF('I', 'mm', pdfstyle)
+          }else{
+            pdf = new jsPDF('p', 'mm', pdfstyle)
+          }
           //pdf页面偏移
           var position = 0
           var index = 1,height,
@@ -70,7 +79,7 @@ const htmlTopdf = {
           //当内容未超过pdf一页显示的范围，无需分页
           if (canvasHeight < a4HeightRef) {
             pdf.addImage(pageData, 'JPEG', 10, 10, a4Width, (a4Width / canvas.width) * canvasHeight)
-            // pdf.save(filename + '.pdf')
+            pdf.save(filename + '.pdf')
             const file = new File([pdf.output("blob")], dayjs().format('YYYYMMDDHHmmss') + '.pdf', {});
             resolve(file)
           } else {
@@ -133,7 +142,7 @@ const htmlTopdf = {
                     })
                     // setTimeout(createImpl, 500, canvas)
                   } else {
-                    // pdf.save(filename + '.pdf')
+                    pdf.save(filename + '.pdf')
                     const file = new File([pdf.output("blob")], dayjs().format('YYYYMMDDHHmmss') + '.pdf', {});
                     console.log(file)
                     resolve(file)
@@ -152,9 +161,3 @@ const htmlTopdf = {
   }
 };
 export default htmlTopdf;
-
-
-
-
-
-

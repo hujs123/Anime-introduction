@@ -12,11 +12,11 @@ module.exports = defineConfig({
               '^/api': '/api'
             }
           },
-          '/hujs': {
+          '/mock': {
             target: 'https://mock.presstime.cn/mock/6523cdda2510f7001a40236f/',
             changeOrigin: true,
             pathRewrite: {
-              '^/hujs': 'hujs'
+              '^/mock': 'mock'
             },
 
           }

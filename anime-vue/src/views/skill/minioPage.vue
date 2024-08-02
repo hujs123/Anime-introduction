@@ -40,34 +40,6 @@ const uploadFile = async () => {
     console.warn(err.message || err.msg)
   })
 }
-// const imageUrl=ref(null)
-// // 获取文件
-// const getFile=async () => {
-//   let objectName="微信图片_20240720102940.jpg"
-//   console.log('查看文件')
-//   await axios.get(`/api/skills/getFileOnMinio/${objectName}`,{responseType: 'blob'}).then(response => {
-//     console.log("response.data",response.data); // 打印响应数据
-//     // imageUrl.value=url
-//     //显示图片
-//     const imgUrl = window.URL.createObjectURL(new Blob([response.data], { type: 'image/jpeg' })); // 假设是JPEG图片
-//     imageUrl.value = imgUrl; // 赋值给imageUrl以便在<img>标签中显示
-//
-//     // 创建一个链接来模拟点击下载
-//     const url = window.URL.createObjectURL(new Blob([response.data]));
-//     // const url = window.URL.createObjectURL(response.data);
-//     const link = document.createElement('a');
-//     link.href = url;
-//     link.setAttribute('download', objectName); // 设置下载文件名
-//     document.body.appendChild(link);
-//     link.click();
-//     // 清理
-//     document.body.removeChild(link);
-//     window.URL.revokeObjectURL(url);
-//     console.log(response.data); // 打印响应数据
-//   }).catch(err => {
-//     console.warn(err.message || err.msg)
-//   })
-// }
 
 const toHomePage = async () => {
   console.log(VITE_APP_SSO_URL)
