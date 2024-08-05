@@ -4,7 +4,7 @@ export const commonRoutes = [
     {
         path: '/',
         name: 'HomePage',
-        meta: {title: '首页', entry: true},
+        meta: {title: '首页', entry: true,type:'1',typename:'首页'},
         component: HomePage
     }
 ]

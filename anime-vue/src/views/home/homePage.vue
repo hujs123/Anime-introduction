@@ -1,53 +1,77 @@
 <template>
-  <div class="home-page">
-    <header class="header">
-      <h1>欢迎来到我们的网站</h1>
-      <button class="self-home-item" v-for="(item, index) in router.options.routes" :key="index" @click="goPage(item.name)"
-           :style="{color: item.meta && item.meta.entry ? 'red' : 'rgba(0, 0, 0, 0.85)'}">
-        {{ item.meta ? item.meta.title : item.name }}
-      </button>
-      <br>
-<!--            <nav>-->
-<!--              <router-link to="/login">登录</router-link>-->
-<!--              <router-link to="/register">注册</router-link>-->
-<!--              <router-link to="/products">产品</router-link>-->
-<!--              <router-link to="/news">新闻</router-link>-->
-<!--              <router-link to="/contact">联系我们</router-link>-->
-<!--            </nav>-->
-    </header>
+  <button class="self-home-item" v-for="(item, index) in router.options.routes" :key="index" @click="goPage(item.name)"
+          :style="{color: item.meta && item.meta.entry ? 'red' : 'rgba(0, 0, 0, 0.85)'}">
+    {{ item.meta ? item.meta.title : item.name }}
+  </button>
+<!--  <a-layout style="min-height: 100vh">-->
+<!--    <a-layout-sider v-model:collapsed="collapsed" collapsible>-->
+<!--      <div class="logo" />-->
+<!--      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">-->
+<!--        <a-menu-item >-->
+<!--          <pie-chart-outlined />-->
+<!--          <span>首页</span>-->
+<!--        </a-menu-item>-->
 
-    <main class="main-content">
-      <section class="featured-products">
-        <h2>特色产品</h2>
-        <!-- 假设使用v-for循环展示产品列表，这里简化 -->
-<!--        <div class="product-item" v-for="product in products" :key="product.id">-->
-<!--          <img :src="product.image" alt="Product Image">-->
-<!--          <h3>{{ product.name }}</h3>-->
-<!--          <p>{{ product.description }}</p>-->
-<!--        </div>-->
-      </section>
+<!--        <a-sub-menu>-->
+<!--          <template #title>-->
+<!--            <span>-->
+<!--              <user-outlined />-->
+<!--              <span>功能模块</span>-->
+<!--            </span>-->
+<!--          </template>-->
+<!--          <a-menu-item  v-for="(item, index) in router.options.routes" :key="index" @click="goPage(item.name)">{{ item.meta ? item.meta.title : item.name }} </a-menu-item>-->
+<!--        </a-sub-menu>-->
 
-      <section class="news-update">
-        <h2>最新资讯</h2>
-        <!-- 假设的新闻列表 -->
-<!--        <article v-for="news in newsList" :key="news.id">-->
-<!--          <h3>{{ news.title }}</h3>-->
-<!--          <p>{{ news.summary }}</p>-->
-<!--          <router-link :to="'/news/' + news.id">阅读更多</router-link>-->
-<!--        </article>-->
-      </section>
-    </main>
+<!--        <a-sub-menu>-->
+<!--          <template #title>-->
+<!--            <span>-->
+<!--              <team-outlined />-->
+<!--              <span>第三方接口</span>-->
+<!--            </span>-->
+<!--          </template>-->
+<!--          <a-menu-item key="6">Team 1</a-menu-item>-->
+<!--        </a-sub-menu>-->
 
-    <footer class="footer">
-      <p>版权所有 &copy; 2023</p>
-    </footer>
-  </div>
+<!--        <a-sub-menu>-->
+<!--          <template #title>-->
+<!--            <span>-->
+<!--              <DesktopOutlined />-->
+<!--              <span>测试页面</span>-->
+<!--            </span>-->
+<!--          </template>-->
+<!--          <a-menu-item key="6">Team 1</a-menu-item>-->
+<!--        </a-sub-menu>-->
+
+<!--        <a-sub-menu>-->
+<!--          <template #title>-->
+<!--            <span>-->
+<!--              <FileOutlined />-->
+<!--              <span>路由管理</span>-->
+<!--            </span>-->
+<!--          </template>-->
+<!--          <a-menu-item key="6">Team 1</a-menu-item>-->
+<!--        </a-sub-menu>-->
+
+<!--        <a-sub-menu>-->
+<!--          <template #title>-->
+<!--            <span>-->
+<!--              <FileOutlined />-->
+<!--              <span>其他</span>-->
+<!--            </span>-->
+<!--          </template>-->
+<!--          <a-menu-item key="6">Team 1</a-menu-item>-->
+<!--        </a-sub-menu>-->
+<!--      </a-menu>-->
+<!--    </a-layout-sider>-->
+<!--  </a-layout>-->
 </template>
 
 <script setup>
 import {onMounted} from 'vue'
+// import {ref} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
+// import {  PieChartOutlined,  DesktopOutlined,  UserOutlined,  TeamOutlined,  FileOutlined,} from '@ant-design/icons-vue';
 import {useUserStore} from '../../store/index'
 
 const userStore = useUserStore()
@@ -55,16 +79,16 @@ const userStore = useUserStore()
 const router = useRouter() // 使用useRouter hook代替直接导入router实例
 const store = useStore()  //
 
+// const collapsed = ref(false);
+// const selectedKeys = ref (['1']);
+
 onMounted(() => {
   init()
 })
 
 const init = () => {
   console.log('store.state.count', store.state.count)
-  store.commit('setters', 10)
   console.log('store.state.count', store.state.count)
-  // console.log(store.commit()mutations.setter())
-  console.log(store.getters.doubleCount)
   console.log("router.options.routes",router.options.routes)
   for(let i=0;i<router.options.routes.length;i++){
     let p=router.options.routes[i]

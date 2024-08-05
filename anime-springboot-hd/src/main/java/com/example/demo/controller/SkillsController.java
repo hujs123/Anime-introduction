@@ -133,4 +133,18 @@ public class SkillsController {
         log.info("【getFileOnMinio】objectName:"+objectName);
         return skillsService.getFileOnMinio(objectName);
     }
+
+    @Operation(summary = "生成二维码", description = "生成二维码")
+    @GetMapping("/captcha")
+    public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.info("【captcha】进入方法");
+        skillsService.captcha(request,response);
+    }
+
+    @Operation(summary = "验证码验证", description = "验证码验证")
+    @PostMapping("/verifyCaptcha")
+    public ReturnData verifyCaptcha(@RequestParam String captcha, HttpServletRequest request) {
+        log.info("【verifyCaptcha】进入方法");
+        return skillsService.verifyCaptcha(captcha,request);
+    }
 }

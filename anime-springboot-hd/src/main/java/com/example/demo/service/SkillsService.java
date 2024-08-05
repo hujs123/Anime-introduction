@@ -7,13 +7,16 @@ import com.example.demo.entity.StaffInfoEntity;
 import com.example.demo.mapper.StaffMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.code.kaptcha.Producer;
 import com.itextpdf.text.*;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -34,6 +37,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
@@ -71,6 +75,9 @@ public class SkillsService {
     @Value("${minio.bucket}")
     private String bucketname;
 
+    @Autowired
+    private Producer captchaProducer;
+
     public ReturnData callThirdInterface() {
         String strurl = Third_Interface_Province;
         String outJson = restTemplate.postForObject(strurl, null, String.class);
@@ -79,8 +86,6 @@ public class SkillsService {
         return ReturnData.ok(jsonArray);
     }
 
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     public void base64ToImage(HttpServletResponse response) {
         //单文件
@@ -374,6 +379,32 @@ public class SkillsService {
         } catch (Exception e) {
             // 异常处理
             throw new RuntimeException("Error downloading file from MinIO", e);
+        }
+    }
+
+    public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpeg");
+        response.setHeader("Cache-Control", "no-store, no-cache");
+
+        String capText = captchaProducer.createText();
+        request.getSession().setAttribute("captcha", capText);
+
+        BufferedImage bi = captchaProducer.createImage(capText);
+
+        ServletOutputStream out = response.getOutputStream();
+        ImageIO.write(bi, "jpg", out);
+        out.flush();
+        out.close();
+    }
+
+    public ReturnData verifyCaptcha(@RequestParam String captcha, HttpServletRequest request) {
+        String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
+        if (sessionCaptcha != null && sessionCaptcha.equalsIgnoreCase(captcha)) {
+            log.info("【verifyCaptcha】验证码正确");
+            return ReturnData.ok("验证码正确");
+        } else {
+            log.info("【verifyCaptcha】验证码错误");
+            return ReturnData.error("验证码错误");
         }
     }
 }
