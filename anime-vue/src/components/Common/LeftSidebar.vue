@@ -10,19 +10,44 @@
 </template>
 
 <script setup>
-import { onMounted,ref} from 'vue';
+import {defineProps, onMounted, ref} from 'vue';
+import {useRouter} from "vue-router";
 
-const menuItems=ref()
+const router = useRouter() // 使用useRouter hook代替直接导入router实例
+
+const props = defineProps({
+  menuType: Function,
+});
+const menuType = ref(props.menuType);
+const menuItems = ref([]);
 onMounted(() => {
   init();
 });
-const init=()=>{
-  console.log('主界面')
-  menuItems.value=[
-    { id: 1, name: '仪表盘', path: '/' },
-    { id: 2, name: '设置', path: '/settings' },
-    { id: 3, name: '用户管理', path: '/users' }
-  ]
+// const init=()=>{
+//   console.log('主界面')
+//   menuItems.value=[
+//     { id: 1, name: '功能清单', path: '/' },
+//     { id: 2, name: '设置', path: '/settings' },
+//     { id: 3, name: '用户管理', path: '/users' }
+//   ]
+// }
+
+const init = () => {
+  console.log('侧边导航栏')
+  let p = 0;
+  // 假设 router.options.routes 已经定义
+  for (let i = 0; i < router.options.routes.length; i++) {
+    if (router.options.routes[i].meta.type == menuType.value) {
+      menuItems.value.push({
+        id: p,
+        name: router.options.routes[i].meta.title,
+        path: router.options.routes[i].path,
+      })
+      p++
+    }
+  }
+  // 可以在这里或任何地方添加对 routerList 的输出或处理
+  console.log('menuItems.value', menuItems.value);
 }
 
 </script>

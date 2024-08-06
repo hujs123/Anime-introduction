@@ -4,17 +4,8 @@
       <img :src="logo" alt="Logo">
     </div>
     <ul class="nav-links">
-      <li>
-        <router-link to="/">首页</router-link>
-      </li>
-      <li>
-        <router-link to="/about">关于我们</router-link>
-      </li>
-      <li>
-        <router-link to="/services">服务</router-link>
-      </li>
-      <li>
-        <router-link to="/contact">联系我们</router-link>
+      <li v-for="item in routerList" :key="item.path">
+        <span @click.stop="selectMenu(item)">{{ item.typename }}</span>
       </li>
     </ul>
     <div class="search-box">
@@ -30,12 +21,19 @@
 </template>
 
 <script setup>
-import {onMounted,ref} from 'vue';
+import {onMounted, ref,defineEmits} from 'vue';
+import {useRouter} from "vue-router";
 import logo from '@/assets/images/logo.png';
+
+const router = useRouter() // 使用useRouter hook代替直接导入router实例
+const emit = defineEmits(['select-menu'])
 const isLoggedIn = ref()
 const userName = ref()
-// const logo = ref('@/assets/images/logo.png')
+let routerList = ref([])
 
+const selectMenu = (item) => {
+  emit('select-menu', item);
+}
 onMounted(() => {
   init();
 });
@@ -44,12 +42,38 @@ const init = () => {
   isLoggedIn.value = false
   userName.value = '访客'
 
+  // 假设 router.options.routes 已经定义
+  for (let i = 0; i < router.options.routes.length; i++) {
+    let found = false;
+    for (let p = 0; p < routerList.value.length; p++) {
+      if (router.options.routes[i].meta.type === routerList.value[p].type) {
+        let param = {title: router.options.routes[i].meta.title, path: router.options.routes[i].meta.path};
+        routerList.value[p].List.push(param);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      // 如果没有找到匹配的 type，则向 routerList 添加一个新项
+      routerList.value.push({
+        type: router.options.routes[i].meta.type,
+        typename: router.options.routes[i].meta.typename, // 这里可能需要一个更具体的值，或者从其他地方获取
+        List: [{
+          title: router.options.routes[i].meta.title,
+          path: router.options.routes[i].meta.path
+        }]
+      });
+    }
+  }
+// 可以在这里或任何地方添加对 routerList 的输出或处理
+  console.log('routerList.value', routerList.value);
 }
 
 </script>
 
 <style scoped>
 .header-nav {
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
