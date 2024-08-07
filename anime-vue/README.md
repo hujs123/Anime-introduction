@@ -49,3 +49,5 @@ my-vue3-project/
 
 功能实现：
 数据的增删改查、表格、树形机构、图片展示、文件上传下载、地图、轮播图、表单存储、弹框界面、弹框提示
+git config --global --unset http.proxy
+git config --global --unset https.proxy

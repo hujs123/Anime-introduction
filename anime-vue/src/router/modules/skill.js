@@ -10,25 +10,31 @@ export const skillRoutes = [
         path: '/captcha-page',
         name: 'captchaPage',
         meta: {title: '验证码验证',type:'2',typename:'功能'},
-        component: () => import('@/views/skill/captchaPage.vue') // 示例中的动态导入
+        component: () => import('@/views/skill/captchaPage.vue')
     },
     {
         path: '/map-page',
         name: 'mapPage',
         meta: {title: '地图',type:'2',typename:'功能'},
-        component: () => import('@/views/skill/mapPage.vue') // 示例中的动态导入
+        component: () => import('@/views/skill/mapPage.vue')
     },
     {
-        path: '/html-to-pdf-Page',
+        path: '/html-to-pdf-page',
         name: 'htmlToPdfPage',
         meta: {title: 'html转pdf',type:'2',typename:'功能'},
-        component: () => import('@/views/skill/htmlToPdfPage.vue') // 示例中的动态导入
+        component: () => import('@/views/skill/htmlToPdfPage.vue')
     },
     {
-        path: '/watermark-Page',
+        path: '/watermark-page',
         name: 'watermarkPage',
         meta: {title: '水印',type:'2',typename:'功能'},
-        component: () => import('@/views/skill/watermarkPage.vue') // 示例中的动态导入
+        component: () => import('@/views/skill/watermarkPage.vue')
+    },
+    {
+        path: '/router-list-Page',
+        name: 'routerListPage',
+        meta: {title: '路由列表',type:'2',typename:'功能'},
+        component: () => import('@/views/skill/routerListPage.vue')
     }
 
 ]
