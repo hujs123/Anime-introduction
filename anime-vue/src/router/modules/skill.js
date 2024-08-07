@@ -27,7 +27,7 @@ export const skillRoutes = [
     {
         path: '/watermark-page',
         name: 'watermarkPage',
-        meta: {title: '水印',type:'2',typename:'功能'},
+        meta: {title: '界面水印水印',type:'2',typename:'功能'},
         component: () => import('@/views/skill/watermarkPage.vue')
     },
     {

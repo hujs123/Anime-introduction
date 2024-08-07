@@ -1,9 +1,12 @@
 <template>
-    <button class="self-home-item" v-for="(item, index) in router.options.routes" :key="index" @click="goPage(item.name)"
-            :style="{color: item.meta && item.meta.entry ? 'red' : 'rgba(0, 0, 0, 0.85)'}">
-      {{ item.meta ? item.meta.title : item.name }}
-    </button>
-
+  <div class="self-home">
+    <div class="self-home-inner">
+      <div class="self-home-item" v-for="(item, index) in router.options.routes" :key="index"
+           :style="{color: item.meta && item.meta.entry ? 'red' : 'rgba(0, 0, 0, 0.85)'}" @click="goPage(item.name)">
+        {{item.meta ? item.meta.title : item.name}}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -13,6 +16,7 @@ import {onMounted} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 import {useUserStore} from '../../store/index'
+
 const userStore = useUserStore()
 
 const router = useRouter() // 使用useRouter hook代替直接导入router实例
@@ -26,7 +30,7 @@ onMounted(() => {
 const init = () => {
   console.log('store.state.count', store.state.count)
   console.log('store.state.count', store.state.count)
-  console.log("router.options.routes",router.options.routes)
+  console.log("router.options.routes", router.options.routes)
 }
 /**
  * 路由跳转
@@ -54,13 +58,12 @@ const goPage = (val) => {
   align-items: flex-start;
 
   .self-home-item {
-    width: 100px;
-    font-size: 16px;
+    width: 120px;
+    font-size: 12px;
     padding: 10px 12px;
     margin: 0 10px 10px 0;
     border: 1px solid #999999;
     text-align: center;
   }
 }
-
 </style>

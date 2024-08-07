@@ -1,8 +1,9 @@
 <template>
   <div class="self-home">
     <div class="self-home-inner">
-      <div class="self-home-item" v-for="(item, index) in router.options.routes" :key="index" :style="{color: item.meta && item.meta.entry ? 'red' : 'rgba(0, 0, 0, 0.85)'}">
-        {{item.meta ? item.meta.title : item.name}}
+      <div class="self-home-item" v-for="(item, index) in router.options.routes" :key="index"
+           :style="{color: item.meta && item.meta.entry ? 'red' : 'rgba(0, 0, 0, 0.85)'}">
+        {{ item.meta ? item.meta.title : item.name }}
       </div>
     </div>
   </div>
@@ -16,7 +17,6 @@
       <button @click="queryData3">处理网关查询</button>
       <button @click="jiami">加密处理</button>
       <button @click="jiemi">解密处理</button>
-
 
 
       <button @click="toHomePage">返回首页</button>
@@ -34,7 +34,7 @@ import {request} from "@/utils/request";
 const router = useRouter()
 const tableData = ref([])
 // const secretKey=ref('qazwsxedcrfv')
-const encryptdate=ref('')
+const encryptdate = ref('')
 // const decryptdate=ref('')
 
 //默认axios访问
@@ -54,8 +54,8 @@ const hello = async () => {
 //默认axios访问
 const getUsers = async () => {
 // try {
-    console.log('getUsers')
-    // console.log('加密信息：',encryptData({ name: '岸本齐史' }, secretKey.value))
+  console.log('getUsers')
+  // console.log('加密信息：',encryptData({ name: '岸本齐史' }, secretKey.value))
   //   await axios1.post('http://localhost:8080/api/users/getUsers',{
   //     encryptedData: selfencrypt({ name: '岸本齐史' }, secretKey.value)
   //   }).then(res => {
@@ -82,7 +82,6 @@ const getAllUsers = async () => {
     console.warn(err.message)
   }
 }
-
 
 
 //默认axios访问
@@ -126,15 +125,15 @@ const queryData3 = async () => {
 }
 const jiami = async () => {
   // let data='123456'
-  console.log('加密数据',encryptdate.value)
+  console.log('加密数据', encryptdate.value)
   // encryptdate.value=selfencrypt({ name: data }, secretKey.value)
-  console.log('encryptdate.value',encryptdate.value)
+  console.log('encryptdate.value', encryptdate.value)
 }
 
 //解密
 const jiemi = async () => {
   await axios1.get('https://image.anosu.top/pixiv/json?num=2&r18=18')
-  console.log('加密数据',encryptdate.value)
+  console.log('加密数据', encryptdate.value)
   // decryptdate.value=decryptData(encryptdate.value, secretKey.value)
   // console.log('encryptdate.value',decryptdate.value)
 }
@@ -146,8 +145,6 @@ const toHomePage = async () => {
 }
 
 
-
-
 </script>
 <style scoped lang="less">
 .self-home {
@@ -155,19 +152,21 @@ const toHomePage = async () => {
   height: 100%;
   overflow: auto;
 }
+
 .self-home-inner {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-.self-home-item {
-  width: 100px;
-  font-size: 16px;
-  padding: 10px 12px;
-  margin: 0 10px 10px 0;
-  border: 1px solid #999999;
-  text-align: center;
-}
+
+  .self-home-item {
+    width: 100px;
+    font-size: 16px;
+    padding: 10px 12px;
+    margin: 0 10px 10px 0;
+    border: 1px solid #999999;
+    text-align: center;
+  }
 }
 </style>

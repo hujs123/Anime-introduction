@@ -16,6 +16,16 @@
   </div>
 </template>
 
+<!--<template>-->
+<!--  <div id="app">-->
+<!--    <nav>-->
+<!--      &lt;!&ndash; 使用 router-link 组件来导航，to 属性指定路由路径 &ndash;&gt;-->
+<!--      <router-link to="/"></router-link>-->
+<!--    </nav>-->
+<!--    <router-view/>-->
+<!--  </div>-->
+<!--</template>-->
+
 <script setup>
 import {onMounted, ref} from 'vue';
 import HeaderNav from './components/Common/HeaderNav.vue';
