@@ -1,19 +1,14 @@
 <template>
   <div id="app">
-    <!-- 使用 Ant Design Vue 的布局组件 -->
     <a-layout>
       <a-layout-header style="background-color: #b2c6d2">
-        <!-- 导航栏 -->
         <header-nav @select-menu="handleSelectMenu"></header-nav>
       </a-layout-header>
       <a-layout>
-        <a-layout-sider width="250px">
-          <!-- 侧边栏 -->
-          <!-- 假设你已经将 Left.vue 重命名为 LeftSidebar.vue 并调整了导入 -->
-          <left-sidebar :menu-items="menuType"></left-sidebar>
+        <a-layout-sider>
+          <left-sidebar :menu-type="menuType"></left-sidebar>
         </a-layout-sider>
         <a-layout-content>
-          <!-- Body，使用路由视图显示不同页面 -->
           <router-view></router-view>
         </a-layout-content>
       </a-layout>
@@ -22,7 +17,7 @@
 </template>
 
 <script setup>
-import {onMounted,ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import HeaderNav from './components/Common/HeaderNav.vue';
 import LeftSidebar from './components/Common/LeftSidebar.vue';
 
@@ -32,16 +27,34 @@ onMounted(() => {
   initMap();
 });
 const initMap = () => {
-  console.log('主界面')
 }
 const handleSelectMenu = (selectedItem) => {
-  // 这里可以更新menuItems，或者做其他逻辑处理
-  // 例如，这里我们简单地将selectedItem添加到menuItems中（实际使用中可能需要更复杂的逻辑）
-  menuType.value = [selectedItem, ...menuType.value.filter(item => item.id !== selectedItem.id)];
+  menuType.value =selectedItem;
 }
 
 </script>
 
-<style>
-/* CSS 样式... */
+<style scoped>
+#app {
+  height: 100vh; /* 使应用占据整个视口高度 */
+  overflow: hidden; /* 防止滚动条出现 */
+}
+
+.ant-layout-header {
+  padding: 0 20px; /* 添加一些内边距 */
+  line-height: 64px; /* 调整头部高度 */
+}
+
+.ant-layout-sider {
+  background: #fff; /* 设置侧边栏背景色 */
+  border-right: 1px solid #e8e8e8; /* 添加右侧边框 */
+}
+
+.ant-layout-content {
+  padding: 24px; /* 为内容区域添加内边距 */
+  background: #f0f2f5; /* 设置内容区域背景色，使其与侧边栏和头部区分开 */
+  min-height: calc(100vh - 128px); /* 确保内容区域有足够的高度 */
+}
 </style>
+
+

@@ -10,78 +10,65 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref} from 'vue';
-import {useRouter} from "vue-router";
+import { defineProps, onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
-const router = useRouter() // 使用useRouter hook代替直接导入router实例
+const router = useRouter();
 
+// 定义 prop 类型，这里假设 menuType 是一个字符串
 const props = defineProps({
-  menuType: Function,
+  menuType: String
 });
-const menuType = ref(props.menuType);
-const menuItems = ref([]);
-onMounted(() => {
-  init();
-});
-// const init=()=>{
-//   console.log('主界面')
-//   menuItems.value=[
-//     { id: 1, name: '功能清单', path: '/' },
-//     { id: 2, name: '设置', path: '/settings' },
-//     { id: 3, name: '用户管理', path: '/users' }
-//   ]
-// }
 
-const init = () => {
-  console.log('侧边导航栏')
-  let p = 0;
-  // 假设 router.options.routes 已经定义
+const menuItems = ref([]);
+
+// 监听 prop 的变化以重新初始化 menuItems
+watch(() => props.menuType, (newValue) => {
+  init(newValue);
+});
+
+onMounted(() => {
+  init(props.menuType); // 组件挂载时立即初始化
+});
+
+const init = (type) => {
+  menuItems.value = []; // 清空现有项
   for (let i = 0; i < router.options.routes.length; i++) {
-    if (router.options.routes[i].meta.type == menuType.value) {
+    if (router.options.routes[i].meta && router.options.routes[i].meta.type === type) {
       menuItems.value.push({
-        id: p,
+        id: menuItems.value.length, // 使用数组长度作为 id
         name: router.options.routes[i].meta.title,
-        path: router.options.routes[i].path,
-      })
-      p++
+        path: router.options.routes[i].path
+      });
     }
   }
-  // 可以在这里或任何地方添加对 routerList 的输出或处理
-  console.log('menuItems.value', menuItems.value);
-}
-
+};
 </script>
 
 <style scoped>
 .left-sidebar {
-  width: 250px; /* 侧边栏宽度 */
-  background-color: #f8f9fa; /* 背景颜色，可根据需要调整 */
-  position: fixed; /* 固定定位，使侧边栏在页面滚动时保持位置不变 */
-  height: 100vh; /* 侧边栏高度与视窗高度相同 */
+  background-color: #fff;
   padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+  overflow-y: auto; /* 如果侧边栏内容过多，则允许滚动 */
+  border-right: 1px solid #e8e8e8; /* 可选：添加右侧边框以分隔内容区域 */
 }
 
 .sidebar-links {
-  list-style: none; /* 移除列表项前面的默认标记 */
+  list-style: none;
   padding: 0;
 }
 
 .sidebar-links li {
-  margin-bottom: 10px; /* 菜单项之间的间距 */
+  margin-bottom: 8px; /* 链接项之间的间隔 */
 }
 
-.sidebar-links li a {
-  text-decoration: none; /* 移除链接的下划线 */
-  color: #343a40; /* 链接文字颜色，可根据需要调整 */
-  font-size: 16px; /* 链接文字大小 */
-  display: block; /* 使链接占满整个列表项 */
-  padding: 5px 10px; /* 链接的内边距 */
-  border-radius: 4px; /* 链接的边框圆角 */
-  transition: background-color 0.3s; /* 背景色过渡效果 */
-}
-
-.sidebar-links li a:hover {
-  background-color: #e9ecef; /* 鼠标悬停时的背景色 */
+.sidebar-link {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 </style>
