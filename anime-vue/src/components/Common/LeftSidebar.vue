@@ -14,7 +14,6 @@ import { defineProps, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
 // 定义 prop 类型，这里假设 menuType 是一个字符串
 const props = defineProps({
   menuType: String
@@ -32,9 +31,10 @@ onMounted(() => {
 });
 
 const init = (type) => {
+  let pathType=type
   menuItems.value = []; // 清空现有项
   for (let i = 0; i < router.options.routes.length; i++) {
-    if (router.options.routes[i].meta && router.options.routes[i].meta.type === type) {
+    if (router.options.routes[i].meta && router.options.routes[i].meta.type == pathType) {
       menuItems.value.push({
         id: menuItems.value.length, // 使用数组长度作为 id
         name: router.options.routes[i].meta.title,
@@ -42,6 +42,8 @@ const init = (type) => {
       });
     }
   }
+  // console.log('pathType',pathType)
+  // console.log('menuItems.value',menuItems.value)
 };
 </script>
 

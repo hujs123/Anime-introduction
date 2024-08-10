@@ -9,8 +9,7 @@ import { routeNameWhitelist } from '@/router/routes'
 export function setupRouteGuards(router) {
   router.beforeEach((to, from, next) => {
     // 在这里添加你的路由守卫逻辑
-    console.log('to',to.name)
-    console.log('from',from.name)
+    console.log("from",from.name,",",'to',to.name)
     // 若为白名单，不需要登录可直接访问
     if (routeNameWhitelist.includes(to.name || '')) {
       return next()
@@ -34,8 +33,7 @@ export function setupRouteGuards(router) {
   router.afterEach((to, from) => {
     // 这里是路由跳转后执行的代码
     // 注意：你不能在这里调用 next()，因为它已经是最后一个守卫了
-    console.log('已经跳转到：', to.path);
-    console.log('来自',from.name)
+    console.log('来自',from.name,",",'已经跳转到：', to.path);
     // 你可以在这里添加其他你需要在路由跳转后执行的代码
     // 比如更新页面标题、发送统计信息、滚动到页面顶部等
   });

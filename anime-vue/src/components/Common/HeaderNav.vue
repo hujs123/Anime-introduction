@@ -1,50 +1,74 @@
 <template>
-  <nav class="header-nav">
-    <div class="logo">
-      <img :src="logo" alt="Logo">
-    </div>
-    <ul class="nav-links">
-      <li v-for="item in routerList" :key="item.path">
-        <span @click.stop="selectMenu(item)">{{ item.typename }}</span>
-        <router-link :to="item.List[0].path"></router-link>
-      </li>
-    </ul>
-    <div class="search-box">
-      <input type="text" placeholder="搜索...">
-      <button>搜索</button>
-    </div>
-    <div class="user-info">
-      <!-- 假设有一个用户登录状态 -->
-      <span v-if="isLoggedIn">你好, {{ userName }}</span>
-      <span v-else><router-link to="/login">登录</router-link></span>
-    </div>
-  </nav>
+  <div>
+    <nav class="header-nav">
+      <div class="logo">
+        <img :src="logo" alt="Logo">
+      </div>
+      <ul class="nav-links">
+        <li v-for="item in routerList" :key="item.path">
+          <span @click.stop="selectMenu(item)">{{ item.typename }}</span>
+          <router-link :to="item.List[0].path"></router-link>
+        </li>
+      </ul>
+      <div class="search-box">
+        <input type="text" placeholder="搜索...">
+        <button>搜索</button>
+      </div>
+      <div class="user-info">
+        <!-- 假设有一个用户登录状态 -->
+        <span v-if="isLoggedIn">你好, {{ userName }}</span>
+        <span v-else style="cursor: pointer;color: #007bff /* 鼠标悬停时显示手指指针 */" @click="login">登录</span>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script setup>
-import {onMounted, ref,defineEmits} from 'vue';
+import {onMounted, ref, defineEmits, defineProps, watch} from 'vue';
 import {useRouter} from "vue-router";
 import logo from '@/assets/images/logo.png';
 
+
 const router = useRouter() // 使用useRouter hook代替直接导入router实例
-const emit = defineEmits(['select-menu'])
+const emit = defineEmits(['select-menu', 'update:login-model'])
 const isLoggedIn = ref()
 const userName = ref()
 let routerList = ref([])
 
-const selectMenu = (item) => {
-  if (item.List && item.List.length > 0) {
-    router.push(item.List[0].path); // 使用Vue Router的push方法导航
-    // 你可以在这里触发一个事件或调用一个方法，以便在需要时更新menuType或其他状态
-    // 但通常，侧面导航栏会根据路由自动更新
-  }
-  console.log('item',item.List[0].path)
-  emit('select-menu', item.type);
-}
+const props = defineProps({
+  loginModel: Boolean
+});
+// 控制弹窗显示
+const showModel = ref(false);
+
 onMounted(() => {
   init();
 });
 const init = () => {
+  getRouterList()
+}
+
+// 监听 prop 的变化以重新初始化 menuItems
+watch(() => props.loginModel, (newValue) => {
+  showModel.value = newValue
+  console.log('标题',newValue)
+});
+
+const selectMenu = (item) => {
+  if (item.List && item.List.length > 0) {
+    router.push(item.List[0].path); // 使用Vue Router的push方法导航
+  }
+  console.log('item', item.List[0].path)
+  emit('select-menu', item.type);
+}
+const login = () => {
+  showModel.value = true
+  emit('update:login-model', showModel.value);
+}
+
+
+//获取路由
+const getRouterList = () => {
   isLoggedIn.value = false
   userName.value = '访客'
   // 假设 router.options.routes 已经定义
@@ -71,7 +95,7 @@ const init = () => {
     }
   }
 // 可以在这里或任何地方添加对 routerList 的输出或处理
-  console.log('routerList.value', routerList.value);
+//   console.log('routerList.value', routerList.value);
 }
 
 </script>
@@ -96,7 +120,7 @@ const init = () => {
 }
 
 .nav-links li {
-  margin-right: 20px; /* 导航项之间的间隔 */
+  margin-right: 10px; /* 导航项之间的间隔 */
 }
 
 .nav-links li span {

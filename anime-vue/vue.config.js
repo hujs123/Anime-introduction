@@ -1,6 +1,8 @@
 // vue.config.js
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
+  //让构建后的资源使用相对路径引用，而不是绝对路径。
+  publicPath: './',
   transpileDependencies: true,
       devServer: {
         port: 8082,

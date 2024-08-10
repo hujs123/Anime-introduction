@@ -4,13 +4,13 @@ let constantRoutes = []
 // 路由name白名单
 const NameWhitelist = ['demo', '404', '500', '']
 
+//首页
+import {commonRoutes,commonWhites} from "@/router/modules/common";
+constantRoutes = constantRoutes.concat(commonRoutes)
+
 //异常界面
 import {errPageRoutes,errPageWhites} from "@/router/modules/errPage";
 constantRoutes = constantRoutes.concat(errPageRoutes)
-
-//
-import {commonRoutes,commonWhites} from "@/router/modules/common";
-constantRoutes = constantRoutes.concat(commonRoutes)
 
 //登录
 import {loginRoutes,loginWhites} from "@/router/modules/login";
@@ -41,7 +41,6 @@ constantRoutes = constantRoutes.concat(thirdInterfaceRoutes)
 import {testPageRoutes,testPageWhites} from "@/router/modules/testPage";
 constantRoutes = constantRoutes.concat(testPageRoutes)
 export const routeNameWhitelist = NameWhitelist
-    .concat(errPageWhites)
     .concat(commonWhites)
     .concat(testPageWhites)
     .concat(skillWhites)
@@ -50,5 +49,6 @@ export const routeNameWhitelist = NameWhitelist
     .concat(loginWhites)
     .concat(staffInfoWhites)
     .concat(thirdInterfaceWhites)
+    .concat(errPageWhites)
 
 export default constantRoutes
