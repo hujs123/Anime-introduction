@@ -45,6 +45,7 @@ onMounted(() => {
   init();
 });
 const init = () => {
+  console.log('router.options.routes',router.options.routes)
   getRouterList()
 }
 

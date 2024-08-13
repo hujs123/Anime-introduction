@@ -8,9 +8,6 @@ const NameWhitelist = ['demo', '404', '500', '']
 import {commonRoutes,commonWhites} from "@/router/modules/common";
 constantRoutes = constantRoutes.concat(commonRoutes)
 
-//异常界面
-import {errPageRoutes,errPageWhites} from "@/router/modules/errPage";
-constantRoutes = constantRoutes.concat(errPageRoutes)
 
 //登录
 import {loginRoutes,loginWhites} from "@/router/modules/login";
@@ -37,12 +34,14 @@ import {thirdInterfaceRoutes,thirdInterfaceWhites} from "@/router/modules/thirdI
 constantRoutes = constantRoutes.concat(thirdInterfaceRoutes)
 
 //测试界面
-//中医
 import {testPageRoutes,testPageWhites} from "@/router/modules/testPage";
 constantRoutes = constantRoutes.concat(testPageRoutes)
+
+//异常界面
+import {errPageRoutes,errPageWhites} from "@/router/modules/errPage";
+constantRoutes = constantRoutes.concat(errPageRoutes)
 export const routeNameWhitelist = NameWhitelist
     .concat(commonWhites)
-    .concat(testPageWhites)
     .concat(skillWhites)
     .concat(dictWhites)
     .concat(personInfoWhites)
@@ -50,5 +49,6 @@ export const routeNameWhitelist = NameWhitelist
     .concat(staffInfoWhites)
     .concat(thirdInterfaceWhites)
     .concat(errPageWhites)
+    .concat(testPageWhites)
 
 export default constantRoutes

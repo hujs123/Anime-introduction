@@ -5,12 +5,12 @@ export const errPageRoutes = [
         meta: {title: '404页面',type:'5',typename:'其他'},
         component: () => import('@/views/error/404Page.vue') // 示例中的动态导入
     },
-    {
-        path: '/404',
-        component: () => import('@/views/error/404Page.vue'),
-        name: '404',
-        meta: { title: '404' ,type:'5',typename:'其他'}
-    },
+    // {
+    //     path: '/404',
+    //     component: () => import('@/views/error/404Page.vue'),
+    //     name: '404',
+    //     meta: { title: '404' ,type:'5',typename:'其他'}
+    // },
     {
         path: '/500',
         name: '500',

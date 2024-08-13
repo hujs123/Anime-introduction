@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <a-layout>
-      <a-layout-header style="background-color: #b2c6d2">
+      <a-layout-header style="background-color: #b2c6d2;">
         <header-nav @select-menu="handleSelectMenu" v-model:login-model="showModel"></header-nav>
       </a-layout-header>
       <a-layout>
@@ -10,8 +10,8 @@
         </a-layout-sider>
         <a-layout-content>
           <router-view></router-view>
-<!--          <LoginModel class="login-model" v-show="showModel" :mhandle-cancel="handleCancel" :mhandle-ok="handleOk"></LoginModel>-->
           <LoginModel class="login-model" v-show="showModel" v-model:mshow-model="showModel"></LoginModel>
+          <MaskLayer  v-model:visible-layer="showModel"></MaskLayer>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -34,6 +34,7 @@ import HeaderNav from './components/Common/HeaderNav.vue';
 import LeftSidebar from './components/Common/LeftSidebar.vue';
 import {useStore} from "vuex";
 import LoginModel from "@/components/Common/loginModel";
+import MaskLayer from "@/components/Common/MaskLayer";
 
 const store = useStore();// 使用 useStore 钩子获取 store 实例
 const menuType = ref()
@@ -41,6 +42,7 @@ const menuType = ref()
 const showModel = ref(false);
 
 onMounted(() => {
+  console.log('首页', showModel.value)
   init();
 });
 
@@ -100,7 +102,7 @@ const handleSelectMenu = (selectedItem) => {
   top: 30%;
   width: 50%;
   height: 50%;
-  z-index: 10;
+  z-index: 1002;
   text-align: center;
 
   background: #FFFFFF;
