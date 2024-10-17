@@ -142,6 +142,50 @@
             <version>2.3.2</version>
         </dependency>
 
+        <!-- webService-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web-services</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash;webservice依赖&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.enunciate</groupId>-->
+<!--            <artifactId>enunciate-xfire-client</artifactId>-->
+<!--            <version>1.20</version>-->
+<!--        </dependency>-->
+
+        <!-- CXF webservice -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.cxf</groupId>-->
+<!--            <artifactId>cxf-spring-boot-starter-jaxws</artifactId>-->
+<!--            <version>4.0.5</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.cxf</groupId>-->
+<!--            <artifactId>cxf-rt-transports-http</artifactId>-->
+<!--            <version>4.0.5</version>-->
+<!--        </dependency>-->
+        <!-- Apache CXF dependencies -->
+            <!-- CXF Core -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-core</artifactId>
+                <version> </version>
+            </dependency>
+            <!-- CXF Frontend JAX-WS -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                <version>YOUR_CXF_VERSION</version>
+            </dependency>
+            <!-- CXF Transport HTTP -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http</artifactId>
+                <version>4.0.5</version>
+            </dependency>
+            <!-- Additional dependencies may be required depending on your project -->
+
     </dependencies>
 
     <build>

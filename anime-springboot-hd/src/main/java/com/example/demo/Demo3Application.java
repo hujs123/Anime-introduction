@@ -22,7 +22,7 @@ public class Demo3Application implements CommandLineRunner {
     @Autowired
     private RestTemplateBuilder builder;
 
-    @Value("${springdoc.swagger-ui.path:/swagger-ui.html}") // 默认路径，也可以从配置文件中获取
+    @Value("${springdoc.swagger-ui.path:/swagger-ui/index.html}") // 默认路径，也可以从配置文件中获取
     private String swaggerUiPath;
 
     @Value("${server.port:/8080}") // 默认路径，也可以从配置文件中获取
